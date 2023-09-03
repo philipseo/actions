@@ -1,0 +1,20 @@
+name: 'Install Node.js'
+description: 'Install Node.js'
+
+inputs:
+  node-version:
+    description: 'The version of Node.js to use'
+    required: false
+    default: '18'
+  cache-package-manager:
+    description: 'Enter the package manager you want to use.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.cache-package-manager }}

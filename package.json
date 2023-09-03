@@ -1,0 +1,11 @@
+{
+  "name": "@philipseo/actions",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Philip Seo <hbnb7894@gmail.com>",
+  "homepage": "https://github.com/philipseo/actions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philipseo/actions",
+  }
+}

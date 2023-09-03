@@ -1,0 +1,9 @@
+### OS ###
+.DS_*
+
+### IDE ###
+### Jetbrains ###
+.idea
+
+### Etc ###
+*.log
