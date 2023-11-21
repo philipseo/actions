@@ -1,0 +1,19 @@
+name: 'Install PNPM'
+description: 'Install PNPM'
+
+inputs:
+  pnpm-version:
+    description: 'The version of PNPM to use'
+    required: false
+    default: '8'
+  cache-package-manager:
+    description: 'Enter the package manager you want to use.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ inputs.pnpm-version }}
