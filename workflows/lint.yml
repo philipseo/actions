@@ -1,0 +1,19 @@
+name: 'Lint'
+description: 'Lint'
+
+inputs:
+  lint-command:
+    default: 'pnpm lint'
+    description: 'The lint command to run'
+    required: false
+
+runs:
+  steps:
+    - name: Install PNPM Dependencies
+      uses: ./.github/actions/install-pnpm-dependencies
+      with:
+        github-token: ${{ inputs.github-token }}
+
+    - name: Run Linting
+      shell: bash
+      run: ${{ inputs.lint-command }}

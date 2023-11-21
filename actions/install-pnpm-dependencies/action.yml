@@ -1,0 +1,45 @@
+name: 'Install PNPM Dependencies'
+description: 'Install PNPM Dependencies'
+
+inputs:
+  pnpm-version:
+    description: 'The version of PNPM to use'
+    required: false
+    default: '8'
+  node-version:
+    description: 'The version of Node.js to use'
+    required: false
+    default: '18'
+  github-token:
+    description: 'The GitHub token to use'
+    required: true
+  include-cache:
+    description: 'Include the cache in the workflow.'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install pnpm
+      uses: ./.github/actions/install-pnpm
+      with:
+        version: ${{ inputs.pnpm-version }}
+
+    - name: Install Node.js
+      uses: ./.github/actions/install-node
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
+
+#    - name: Setup .npmrc
+#      shell: bash
+#      run: |
+#        sed 's/INSERT_YOUR_GITHUB_TOKEN_HERE/${{ inputs.github-token }}/g' .npmrc.example > .npmrc
+
+    - name: Cache pnpm
+      uses: ./.github/actions/cache-pnpm
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --ignore-scripts --frozen-lockfile --prefer-offline
