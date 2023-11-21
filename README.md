@@ -1,4 +1,4 @@
-# @philipseo/actions
+# philipseo/actions
 
 ---
 
