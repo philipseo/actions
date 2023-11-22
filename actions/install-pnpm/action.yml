@@ -6,9 +6,6 @@ inputs:
     description: 'The version of PNPM to use'
     required: false
     default: '8'
-  cache-package-manager:
-    description: 'Enter the package manager you want to use.'
-    required: true
 
 runs:
   using: 'composite'

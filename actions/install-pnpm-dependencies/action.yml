@@ -12,11 +12,15 @@ inputs:
     default: '18'
   github-token:
     description: 'The GitHub token to use'
-    required: true
+    required: false
   include-cache:
     description: 'Include the cache in the workflow.'
     required: false
     default: 'true'
+  cache-package-manager:
+    description: 'Enter the package manager you want to use.'
+    required: false
+    default: 'pnpm'
 
 runs:
   using: 'composite'
@@ -24,13 +28,13 @@ runs:
     - name: Install pnpm
       uses: ./reusable-actions/actions/install-pnpm
       with:
-        version: ${{ inputs.pnpm-version }}
+        pnpm-version: ${{ inputs.pnpm-version }}
 
     - name: Install Node.js
       uses: ./reusable-actions/actions/install-node
       with:
         node-version: ${{ inputs.node-version }}
-        cache: 'pnpm'
+        cache-package-manager: ${{ inputs.cache-package-manager }}
 
 #    - name: Setup .npmrc
 #      shell: bash

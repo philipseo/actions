@@ -8,7 +8,8 @@ inputs:
     default: '18'
   cache-package-manager:
     description: 'Enter the package manager you want to use.'
-    required: true
+    required: false
+    default: 'pnpm'
 
 runs:
   using: 'composite'
