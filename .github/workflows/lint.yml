@@ -28,7 +28,7 @@ jobs:
           path: reusable-actions
 
       - name: Install PNPM Dependencies
-        uses: ./reusable-actions/actions/install-pnpm-dependencies/action.yml
+        uses: ./reusable-actions/actions/install-pnpm-dependencies
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
