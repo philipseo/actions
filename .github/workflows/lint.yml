@@ -24,7 +24,7 @@ jobs:
       - name: Install PNPM Dependencies
         uses: ./.github/actions/install-pnpm-dependencies
         with:
-          github-token: ${{ secret.GH_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
 
       - name: Run Linting
         shell: bash
