@@ -22,12 +22,12 @@ runs:
   using: 'composite'
   steps:
     - name: Install pnpm
-      uses: ./.github/actions/install-pnpm
+      uses: ./reusable-actions/actions/install-pnpm
       with:
         version: ${{ inputs.pnpm-version }}
 
     - name: Install Node.js
-      uses: ./.github/actions/install-node
+      uses: ./reusable-actions/actions/install-node
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
@@ -38,7 +38,7 @@ runs:
 #        sed 's/INSERT_YOUR_GITHUB_TOKEN_HERE/${{ inputs.github-token }}/g' .npmrc.example > .npmrc
 
     - name: Cache pnpm
-      uses: ./.github/actions/cache-pnpm
+      uses: ./reusable-actions/actions/cache-pnpm
 
     - name: Install dependencies
       shell: bash
