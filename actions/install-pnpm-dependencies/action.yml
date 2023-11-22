@@ -17,32 +17,40 @@ inputs:
     description: 'Include the cache in the workflow.'
     required: false
     default: 'true'
-  cache-package-manager:
-    description: 'Enter the package manager you want to use.'
-    required: false
-    default: 'pnpm'
 
 runs:
   using: 'composite'
   steps:
     - name: Install pnpm
-      uses: ./reusable-actions/actions/install-pnpm
+      uses: pnpm/action-setup@v2
       with:
-        pnpm-version: ${{ inputs.pnpm-version }}
+        version: ${{ inputs.pnpm-version }}
 
     - name: Install Node.js
-      uses: ./reusable-actions/actions/install-node
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
-        cache-package-manager: ${{ inputs.cache-package-manager }}
+        cache: 'pnpm'
 
 #    - name: Setup .npmrc
 #      shell: bash
 #      run: |
 #        sed 's/INSERT_YOUR_GITHUB_TOKEN_HERE/${{ inputs.github-token }}/g' .npmrc.example > .npmrc
 
-    - name: Cache pnpm
-      uses: ./reusable-actions/actions/cache-pnpm
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - if: ${{ inputs.include-cache == 'true' }}
+      uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
       shell: bash
