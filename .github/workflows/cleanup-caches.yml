@@ -3,7 +3,7 @@ name: reusable cleanup caches workflow by a branch
 on:
   workflow_call:
     secrets:
-      github-token:
+      GH_TOKEN:
         description: 'The GitHub token to use'
         required: true
 
