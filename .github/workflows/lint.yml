@@ -17,13 +17,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-runs:
-  steps:
-    - name: Install PNPM Dependencies
-      uses: ./.github/actions/install-pnpm-dependencies
-      with:
-        github-token: ${{ secret.github-token }}
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PNPM Dependencies
+        uses: ./.github/actions/install-pnpm-dependencies
+        with:
+          github-token: ${{ secret.github-token }}
 
-    - name: Run Linting
-      shell: bash
-      run: ${{ inputs.lint-command }}
+      - name: Run Linting
+        shell: bash
+        run: ${{ inputs.lint-command }}
