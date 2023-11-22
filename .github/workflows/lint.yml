@@ -1,18 +1,28 @@
 name: 'Lint'
 description: 'Lint'
 
-inputs:
-  lint-command:
-    default: 'pnpm lint'
-    description: 'The lint command to run'
-    required: false
+on:
+  workflow_call:
+    inputs:
+      lint-command:
+        default: 'pnpm lint'
+        description: 'The lint command to run'
+        required: false
+    secrets:
+      GH_TOKEN:
+        description: 'The GitHub token to use'
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 runs:
   steps:
     - name: Install PNPM Dependencies
       uses: ./.github/actions/install-pnpm-dependencies
       with:
-        github-token: ${{ inputs.github-token }}
+        github-token: ${{ secret.github-token }}
 
     - name: Run Linting
       shell: bash
