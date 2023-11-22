@@ -21,8 +21,14 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: philipseo/actions
+          path: reusable-actions
+
       - name: Install PNPM Dependencies
-        uses: philipseo/actions/.github/actions/install-pnpm-dependencies/action.yml@main
+        uses: ./reusable-actions/actions/install-pnpm-dependencies/action.yml
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
