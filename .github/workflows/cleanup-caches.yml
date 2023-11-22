@@ -2,10 +2,6 @@ name: reusable cleanup caches workflow by a branch
 
 on:
   workflow_call:
-    inputs:
-      github-token:
-        description: 'The GitHub token to use'
-        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,7 +13,7 @@ jobs:
     steps:
       - name: Cleanup
         env:
-          GH_TOKEN: ${{ inputs.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh extension install actions/gh-actions-cache
           
