@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install PNPM Dependencies
-        uses: philipseo/actions/.github/actions/install-pnpm-dependencies
+        uses: philipseo/actions/.github/actions/install-pnpm-dependencies/action.yml@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
