@@ -1,5 +1,4 @@
-name: 'Lint'
-description: 'Lint'
+name: reusable lint workflow
 
 on:
   workflow_call:
@@ -7,6 +6,7 @@ on:
       lint-command:
         default: 'pnpm lint'
         description: 'The lint command to run'
+        type: string
         required: false
     secrets:
       GH_TOKEN:
