@@ -1,4 +1,4 @@
-name: reusable cleanup caches workflow by a branch
+name: reusable cleanup caches
 
 on:
   workflow_call:
