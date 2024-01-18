@@ -1,4 +1,4 @@
-name: reusable cleanup caches
+name: Reusable clear github cache
 
 on:
   workflow_call:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cleanup:
+  reusable-clear-github-cache:
     runs-on: ubuntu-latest
     steps:
       - name: Cleanup
