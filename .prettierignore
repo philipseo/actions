@@ -5,8 +5,9 @@
 ### Jetbrains ###
 .idea/
 
-### DEPENDENCIES ###
+### Dependencies ###
 node_modules/
+pnpm-lock.yaml
 
-### Etc ###
-*.log
+### Husky ###
+.husky/

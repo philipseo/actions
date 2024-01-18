@@ -7,5 +7,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/philipseo/actions"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "prettier": "prettier .",
+    "prettier:fix": "pnpm prettier --write",
+    "lint": "pnpm prettier"
+  },
+  "devDependencies": {
+    "@philipseo/configs": "0.0.2"
   }
 }
