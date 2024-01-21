@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Versioning
         shell: bash
-        run: npx @philipseo/scripts versioning ${{ secrets.GH_TOKEN }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
+        run: npx -p @philipseo/scripts versioning ${{ secrets.GH_TOKEN }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
