@@ -2,11 +2,6 @@ name: Reusable versioning workflow
 
 on:
   workflow_call:
-    inputs:
-      github-token:
-        description: 'The github token to use'
-        type: string
-        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -35,4 +30,4 @@ jobs:
 
       - name: Run Versioning
         shell: bash
-        run: npx @philipseo/scripts versioning ${{ inputs.githubToken }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
+        run: npx @philipseo/scripts versioning ${{ secrets.GH_TOKEN }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
