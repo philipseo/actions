@@ -24,6 +24,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: philipseo/actions
+          path: reusable-actions
+
       - name: Install Node.js
         uses: ./reusable-actions/actions/install-node
 
