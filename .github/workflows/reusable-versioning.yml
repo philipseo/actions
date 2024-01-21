@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  repository-owner: ${{ github.event.repository_owner }}
+  repository-owner: ${{ github.repository_owner }}
   repository-name: ${{ github.event.repository.name }}
   pull-request-number: ${{ github.event.pull_request.number }}
 
