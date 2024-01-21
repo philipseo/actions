@@ -23,7 +23,6 @@ runs:
         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
     - name: Setup pnpm cache
-      id: pnpm-cache
       uses: actions/cache@v4
       with:
         path: ${{ env.STORE_PATH }}
@@ -32,6 +31,5 @@ runs:
           ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
-      if: steps.pnpm-cache.outputs.cache-hit != 'true'
       shell: bash
       run: pnpm install
