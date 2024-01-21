@@ -6,21 +6,11 @@ inputs:
     description: 'The version of Node.js to use'
     required: false
     default: '20'
-  using-cache:
-    description: 'Use the cache in the workflow.'
-    required: false
-    default: 'false'
-  cache-package-manager:
-    description: 'Enter the package manager you want to use.'
-    required: false
-    default: 'pnpm'
 
 runs:
   using: 'composite'
   steps:
     - name: Install Node.js
-      if: ${{ inputs.using-cache == 'true' }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
-        cache: ${{ if(eq(inputs.using-cache, 'true'), inputs.cache-package-manager, '') }}
