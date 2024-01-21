@@ -3,15 +3,11 @@ name: Reusable lint workflow
 on:
   workflow_call:
     inputs:
-      lint-command:
+      lintCommand:
         default: 'pnpm lint'
         description: 'The lint command to run'
         type: string
         required: false
-    secrets:
-      GH_TOKEN:
-        description: 'The GitHub token to use'
-        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,17 +20,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout actions
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           repository: philipseo/actions
           path: reusable-actions
 
+      - name: Install Node.js
+        uses: ./reusable-actions/actions/install-node
+
       - name: Install PNPM Dependencies
-        uses: ./reusable-actions/actions/install-pnpm-dependencies
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
+        uses: ./reusable-actions/actions/install-pnpm
 
       - name: Run Linting
         shell: bash
-        run: ${{ inputs.lint-command }}
+        run: ${{ inputs.lintCommand }}

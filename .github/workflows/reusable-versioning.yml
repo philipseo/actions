@@ -1,0 +1,32 @@
+name: Reusable versioning workflow
+
+on:
+  workflow_call:
+    inputs:
+      githubToken:
+        description: 'The github token to use'
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REPOSITORY_OWNER: ${{ github.event.repository_owner }}
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: ./reusable-actions/actions/install-node
+
+      - name: Run Versioning
+        shell: bash
+        run: npx @philipseo/scripts versioning ${{ inputs.githubToken }} ${{ env.REPOSITORY_OWNER }} ${{ env.REPOSITORY_NAME }} ${{ env.PULL_REQUEST_NUMBER }}
