@@ -3,7 +3,7 @@ name: Reusable versioning workflow
 on:
   workflow_call:
     inputs:
-      githubToken:
+      github-token:
         description: 'The github token to use'
         type: string
         required: true
@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  REPOSITORY_OWNER: ${{ github.event.repository_owner }}
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
-  PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+  repository-owner: ${{ github.event.repository_owner }}
+  repository-name: ${{ github.event.repository.name }}
+  pull-request-number: ${{ github.event.pull_request.number }}
 
 jobs:
   versioning:
@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Versioning
         shell: bash
-        run: npx @philipseo/scripts versioning ${{ inputs.githubToken }} ${{ env.REPOSITORY_OWNER }} ${{ env.REPOSITORY_NAME }} ${{ env.PULL_REQUEST_NUMBER }}
+        run: npx @philipseo/scripts versioning ${{ inputs.githubToken }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}

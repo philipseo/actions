@@ -2,9 +2,10 @@ name: Reusable clear github cache
 
 on:
   workflow_call:
-    secrets:
-      GH_TOKEN:
+    inputs:
+      github-token:
         description: 'The GitHub token to use'
+        type: string
         required: true
 
 concurrency:
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Cleanup
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ inputs.github-token }}
         run: |
           gh extension install actions/gh-actions-cache
 

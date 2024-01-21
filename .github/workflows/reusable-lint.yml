@@ -3,7 +3,7 @@ name: Reusable lint workflow
 on:
   workflow_call:
     inputs:
-      lintCommand:
+      lint-commend:
         default: 'pnpm lint'
         description: 'The lint command to run'
         type: string
@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Linting
         shell: bash
-        run: ${{ inputs.lintCommand }}
+        run: ${{ inputs.lint-commend }}
