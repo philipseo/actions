@@ -55,7 +55,7 @@ jobs:
           git config user.name "${{ env.username }}"
           git config user.email "${{ env.username }}@users.noreply.github.com"
           git add .
-          git rm --cached reusable-actions
+          git rm -r --cached reusable-actions
           git commit -m 'Release'
           git push origin main --force
 
