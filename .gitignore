@@ -7,7 +7,6 @@
 
 ### DEPENDENCIES ###
 node_modules/
-dist/
 
 ### Etc ###
 *.log
