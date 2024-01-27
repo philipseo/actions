@@ -28,3 +28,6 @@ jobs:
           extends-section-fields: |
             *Custom1*: ${{ github.event.repository.name }}
             *Custom2*: example
+
+      - name: Echo
+        run: echo ${{ steps.test.outputs.context }}

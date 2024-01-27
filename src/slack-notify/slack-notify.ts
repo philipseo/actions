@@ -11,7 +11,16 @@ async function slackNotify() {
       required: false,
     });
 
-    const context = github.context;
+    const context = {
+      github: github.context,
+      inputs: {
+        channelId,
+        botToken,
+        title,
+        extendsSectionFields,
+      },
+    };
+    core.setOutput('context', context);
     console.log('aaa', context);
     // const blocks = [
     //   {
