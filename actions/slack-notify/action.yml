@@ -1,0 +1,20 @@
+name: 'Slack Notify'
+description: 'Slack notify'
+
+inputs:
+  channel-id:
+    description: 'Slack channel id'
+    required: true
+  bot-token:
+    description: 'Slack bot token'
+    required: true
+  title:
+    description: 'Slack notify title'
+    required: true
+  extends-section-fields:
+    description: 'Slack notify extends section fields'
+    required: false
+
+runs:
+  using: 'node20'
+  main: 'dist/slack-notify.mjs'

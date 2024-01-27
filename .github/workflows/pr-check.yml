@@ -1,0 +1,30 @@
+name: PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+#env:
+#  GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+#  PR_NUMBER: ${{ github.event.pull_request.number }}
+
+jobs:
+  slack-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code Repository
+        uses: actions/checkout@v3
+
+      - name: test
+        uses: ./actions/slack-notify
+        with:
+          title: '제목입니당'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          extends-section-fields: |
+            *Custom1*: ${{ github.event.repository.name }}
+            *Custom2*: example
