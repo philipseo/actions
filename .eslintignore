@@ -15,5 +15,8 @@ pnpm-lock.yaml
 ### Testing ###
 coverage/
 
+### Build ###
+dist/
+
 ### Etc ###
 *.log
