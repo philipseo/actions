@@ -17,4 +17,4 @@ inputs:
 
 runs:
   using: 'node20'
-  main: '../../dist/slack-notify.mjs'
+  main: '../../dist/slack-notify/index.js'
