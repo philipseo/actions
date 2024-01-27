@@ -28925,7 +28925,16 @@ async function slackNotify() {
         const extendsSectionFields = core_1.default.getInput('extends-section-fields', {
             required: false,
         });
-        const context = github_1.default.context;
+        const context = {
+            github: github_1.default.context,
+            inputs: {
+                channelId,
+                botToken,
+                title,
+                extendsSectionFields,
+            },
+        };
+        core_1.default.setOutput('context', context);
         console.log('aaa', context);
         // const blocks = [
         //   {
