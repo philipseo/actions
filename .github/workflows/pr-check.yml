@@ -4,14 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   pr-check:
     name: Reusable PR Check
-    uses: ./.github/workflows/reusable-pr-check.yml
+    uses: .github/workflows/reusable-pr-check.yml
     with:
       is-local: true
-      reusable-actions-folder-path: './.github/workflows'
+      reusable-actions-folder-path: '.github/workflows'
