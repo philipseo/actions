@@ -61,11 +61,11 @@ jobs:
           extends-section-fields: |
             [
               {
-                type: 'mrkdwn',
-                text: 'test1',
+                "type": "mrkdwn",
+                "text": "test1"
               },
               {
-                type: 'mrkdwn',
-                text: 'test2',
+                "type": "mrkdwn",
+                "text": "test2"
               }
             ]

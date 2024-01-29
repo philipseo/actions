@@ -54,12 +54,12 @@ describe('slackNotify', () => {
     const MOCK_TITLE = 'mockTitle';
     const MOCK_EXTENDS_SECTION_FIELDS = `[
   {
-    type: 'mrkdwn',
-    text: 'test1',
+    "type": "mrkdwn",
+    "text": "test1"
   },
   {
-    type: 'mrkdwn',
-    text: 'test2',
+    "type": "mrkdwn",
+    "text": "test2"
   }
 ]`;
 
