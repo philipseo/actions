@@ -3,19 +3,14 @@ name: Reusable PR Check
 on:
   workflow_call:
     inputs:
-      is-local:
-        default: false
-        description: 'Is local'
-        type: boolean
-        required: false
-      lint-commend:
-        default: 'pnpm lint'
-        description: 'The lint command to run'
+      reusable-lint-path:
+        default: 'philipseo/actions/.github/workflows/reusable-lint.yml@main'
+        description: 'Boolean flag indicating whether the workflow is running locally or within GitHub Actions environment.'
         type: string
         required: false
-      test-command:
-        default: 'pnpm test'
-        description: 'The test command to run'
+      reusable-test-path:
+        default: 'philipseo/actions/.github/workflows/reusable-test.yml@main'
+        description: 'Boolean flag indicating whether the workflow is running locally or within GitHub Actions environment.'
         type: string
         required: false
 
@@ -23,24 +18,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-#env:
-#  GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-#  PR_NUMBER: ${{ github.event.pull_request.number }}
-
 jobs:
-  local-lint:
-    if: ${{ inputs.is-local == 'true' }}
-    name: Reusable lint
-    uses: ./.github/workflows/reusable-lint.yml
-    with:
-      is-local: ${{ inputs.is-local }}
-
   lint:
-    if: ${{ inputs.is-local == 'false' }}
     name: Reusable lint
-    uses: philipseo/actions/.github/workflows/reusable-lint.yml@main
-    with:
-      is-local: ${{ inputs.is-local }}
+    uses: ${{ inputs.reusable-lint-path }}
 #
 #  test:
 #    runs-on: ubuntu-latest

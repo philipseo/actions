@@ -9,4 +9,5 @@ jobs:
     name: Reusable PR Check
     uses: ./.github/workflows/reusable-pr-check.yml
     with:
-      is-local: true
+      reusable-lint-path: './.github/workflows/reusable-lint.yml'
+      reusable-test-path: './.github/workflows/reusable-test.yml'
