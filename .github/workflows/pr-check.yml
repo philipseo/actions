@@ -8,10 +8,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-#env:
-#  GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-#  PR_NUMBER: ${{ github.event.pull_request.number }}
-
 jobs:
   pr-check:
     runs-on: ubuntu-latest
