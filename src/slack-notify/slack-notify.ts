@@ -16,17 +16,12 @@ async function slackNotify() {
       },
     );
 
-    console.log('bbb', extendsSectionFields);
-
     const parsedExtendsSectionFields = extendsSectionFields
       ? JSON.parse(extendsSectionFields)
       : [];
 
-    console.log('asdda', parsedExtendsSectionFields);
-
     const {
       actor,
-      runId,
       payload: { repository, pull_request },
     } = context;
     const branchName = pull_request?.head?.ref;
@@ -56,10 +51,6 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Author*: ${actor}`,
           },
-          {
-            type: 'mrkdwn',
-            text: `*Workflow*: <${repositoryUrl}/actions/runs/${runId}|link>`,
-          },
           ...parsedExtendsSectionFields,
         ],
       },
@@ -67,7 +58,6 @@ async function slackNotify() {
 
     const slackApi = new WebClient(botToken);
 
-    console.log('aaa', blocks);
     await slackApi.chat.postMessage({
       channel: channelId,
       text: title,

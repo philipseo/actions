@@ -4,6 +4,10 @@ import { WebClient } from '@slack/web-api';
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
 
+const MOCK_CHANNEL_ID = 'mockChannelId';
+const MOCK_BOT_TOKEN = 'mockBotToken';
+const MOCK_TITLE = 'mockTitle';
+
 jest.mock('@actions/github', () => {
   return {
     context: {
@@ -40,19 +44,8 @@ jest.mock('@slack/web-api', () => {
   };
 });
 
-describe('slackNotify', () => {
-  beforeAll(() => {
-    new WebClient();
-  });
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
-  test('✅ Send slack notification', async () => {
-    const MOCK_CHANNEL_ID = 'mockChannelId';
-    const MOCK_BOT_TOKEN = 'mockBotToken';
-    const MOCK_TITLE = 'mockTitle';
-    const MOCK_EXTENDS_SECTION_FIELDS = `[
+function getInputValue(name: string, isNullExtendSectionFields?: boolean) {
+  const MOCK_EXTENDS_SECTION_FIELDS = `[
   {
     "type": "mrkdwn",
     "text": "test1"
@@ -62,20 +55,41 @@ describe('slackNotify', () => {
     "text": "test2"
   }
 ]`;
+  switch (name) {
+    case GET_INPUT_KEY.CHANNEL_ID:
+      return MOCK_CHANNEL_ID;
+    case GET_INPUT_KEY.BOT_TOKEN:
+      return MOCK_BOT_TOKEN;
+    case GET_INPUT_KEY.TITLE:
+      return MOCK_TITLE;
+    case GET_INPUT_KEY.EXTENDS_SECTION_FIELDS:
+      return isNullExtendSectionFields ? MOCK_EXTENDS_SECTION_FIELDS : '';
+    default:
+      return '';
+  }
+}
 
+describe('slackNotify', () => {
+  beforeAll(() => {
+    new WebClient();
+  });
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test('✅ Send slack notification without extendsSectionFields', async () => {
     jest.spyOn(core, 'getInput').mockImplementation((name) => {
-      switch (name) {
-        case GET_INPUT_KEY.CHANNEL_ID:
-          return MOCK_CHANNEL_ID;
-        case GET_INPUT_KEY.BOT_TOKEN:
-          return MOCK_BOT_TOKEN;
-        case GET_INPUT_KEY.TITLE:
-          return MOCK_TITLE;
-        case GET_INPUT_KEY.EXTENDS_SECTION_FIELDS:
-          return MOCK_EXTENDS_SECTION_FIELDS;
-        default:
-          return '';
-      }
+      return getInputValue(name, true);
+    });
+
+    await slackNotify();
+
+    expect(core.getInput).toHaveBeenCalledTimes(4);
+  });
+
+  test('✅ Send slack notification with extendsSectionFields', async () => {
+    jest.spyOn(core, 'getInput').mockImplementation((name) => {
+      return getInputValue(name);
     });
 
     await slackNotify();

@@ -38,31 +38,50 @@ jobs:
         shell: bash
         run: pnpm test
 
-  slack-notify:
+  failed-slack-notify:
+    if: ${{ failure() }}
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
       - name: Checkout code Repository
         uses: actions/checkout@v4
 
-      - name: Slack notify
-        uses: ./actions/slack-notify
-        with:
-          title: 'Test :rocket:'
-          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-
       - name: Slack notify2
         uses: ./actions/slack-notify
         with:
-          title: 'Test :rocket:'
+          title: 'Failed PR Check'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           extends-section-fields: |
             [
               {
                 "type": "mrkdwn",
-                "text": "test1"
+                "text": "*Workflow*: <${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|link>",
+              },
+              {
+                "type": "mrkdwn",
+                "text": "test2"
+              }
+            ]
+  success-slack-notify:
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: Checkout code Repository
+        uses: actions/checkout@v4
+
+      - name: Slack notify2
+        uses: ./actions/slack-notify
+        with:
+          title: 'Failed PR Check'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          extends-section-fields: |
+            [
+              {
+                "type": "mrkdwn",
+                "text": "*Workflow*: <${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|link>",
               },
               {
                 "type": "mrkdwn",
