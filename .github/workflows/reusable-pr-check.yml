@@ -36,7 +36,7 @@ jobs:
       is-local: ${{ inputs.is-local }}
 
   lint:
-    if: ${{ inputs.is-local == 'false }}
+    if: ${{ inputs.is-local == 'false' }}
     name: Reusable lint
     uses: philipseo/actions/.github/workflows/reusable-lint.yml@main
     with:
