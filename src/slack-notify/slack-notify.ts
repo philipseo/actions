@@ -16,7 +16,11 @@ async function slackNotify() {
       },
     );
 
+    console.log('bbb', extendsSectionFields);
+
     const parsedExtendsSectionFields = JSON.parse(extendsSectionFields);
+
+    console.log('asdda', parsedExtendsSectionFields);
 
     const {
       actor,
