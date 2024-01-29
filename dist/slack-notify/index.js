@@ -28906,6 +28906,23 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 8129:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const slack_notify_1 = __importDefault(__nccwpck_require__(7796));
+(async () => {
+    await (0, slack_notify_1.default)();
+})();
+
+
+/***/ }),
+
 /***/ 7796:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -30865,7 +30882,7 @@ module.exports = parseParams
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(7796);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(8129);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
