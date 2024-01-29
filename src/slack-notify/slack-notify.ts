@@ -62,8 +62,8 @@ async function slackNotify() {
 
     console.log('aaa', botToken, channelId, title, blocks);
     await slackApi.chat.postMessage({
-      text: `${title}`,
       channel: channelId,
+      text: title,
       blocks,
     });
   } catch (error) {
