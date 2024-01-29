@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Reusable PR Check
-        uses: philipseo/actions/.github/workflows/reusable-pr-check.yml@main
+        uses: ./.github/workflows/reusable-pr-check.yml
         with:
           is-local: true
           reusable-actions-folder-path: './actions'

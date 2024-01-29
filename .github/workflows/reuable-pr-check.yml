@@ -61,7 +61,7 @@ jobs:
       - name: Checkout code Repository
         uses: actions/checkout@v4
 
-      - name:
+      - name: Slack notify
         uses: ./actions/slack-notify
         with:
           title: 'Test :rocket:'
