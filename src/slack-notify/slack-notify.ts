@@ -15,7 +15,6 @@ async function slackNotify() {
         required: false,
       },
     );
-    console.log('aaaa', channelId, botToken, title, extendsSectionFields);
 
     const {
       actor,
@@ -53,14 +52,14 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Workflow*: <${repositoryUrl}/actions/runs/${runId}|link>`,
           },
-          // ...extendsSectionFields,
+          ...extendsSectionFields,
         ],
       },
     ];
 
     const slackApi = new WebClient(botToken);
 
-    console.log('aaa', botToken, channelId, title, blocks);
+    console.log('aaa', blocks);
     await slackApi.chat.postMessage({
       channel: channelId,
       text: title,
