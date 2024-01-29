@@ -34,14 +34,12 @@ concurrency:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Reusable lint
-        uses: ${{ inputs.reusable-action-folder-path }}/workflows/reusable-lint
-        with:
-          is-local: ${{ inputs.is-local }}
-          reusable-action-folder-path: ${{ inputs.reusable-action-folder-path }}
-          lint-commend: ${{ inputs.lint-commend }}
+    name: Reusable lint
+    uses: ${{ inputs.reusable-action-folder-path }}/workflows/reusable-lint.yml
+    with:
+      is-local: ${{ inputs.is-local }}
+      reusable-action-folder-path: ${{ inputs.reusable-action-folder-path }}
+      lint-commend: ${{ inputs.lint-commend }}
 #
 #  test:
 #    runs-on: ubuntu-latest
