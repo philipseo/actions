@@ -51,6 +51,13 @@ jobs:
           title: 'Test :rocket:'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+
+      - name: Slack notify2
+        uses: ./actions/slack-notify
+        with:
+          title: 'Test :rocket:'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           extends-section-fields: |
             [
               {

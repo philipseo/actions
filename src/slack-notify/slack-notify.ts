@@ -16,6 +16,8 @@ async function slackNotify() {
       },
     );
 
+    const parsedExtendsSectionFields = JSON.parse(extendsSectionFields);
+
     const {
       actor,
       runId,
@@ -52,7 +54,7 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Workflow*: <${repositoryUrl}/actions/runs/${runId}|link>`,
           },
-          ...extendsSectionFields,
+          ...parsedExtendsSectionFields,
         ],
       },
     ];
