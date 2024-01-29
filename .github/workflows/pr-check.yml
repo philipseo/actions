@@ -7,6 +7,6 @@ on:
 jobs:
   pr-check:
     name: Reusable PR Check
-    uses: ./.github/workflows/reusable-pr-check.yml@${{ github.event.ref }}
+    uses: ./.github/workflows/reusable-pr-check.yml
     with:
       is-local: true

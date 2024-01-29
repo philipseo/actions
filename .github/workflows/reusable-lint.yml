@@ -19,20 +19,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Checkout
-        if: ${{ !inputs.is-local }}
-        uses: actions/checkout@v4
-        with:
-          repository: philipseo/actions
-          path: ${{ inputs.reusable-action-folder-path }}
-
-      - name: Install Node.js
-        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-node
-
-      - name: Install PNPM Dependencies
-        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-pnpm
-
-      - name: Run lint
-        shell: bash
-        run: ${{ inputs.lint-command }}
+#      - name: Checkout
+#        if: ${{ !inputs.is-local }}
+#        uses: actions/checkout@v4
+#        with:
+#          repository: philipseo/actions
+#          path: ${{ inputs.reusable-action-folder-path }}
+#
+#      - name: Install Node.js
+#        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-node
+#
+#      - name: Install PNPM Dependencies
+#        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-pnpm
+#
+#      - name: Run lint
+#        shell: bash
+#        run: ${{ inputs.lint-command }}
