@@ -10,13 +10,8 @@ concurrency:
 
 jobs:
   pr-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Reusable PR Check
-        uses: ./.github/workflows/reusable-pr-check.yml
-        with:
-          is-local: true
-          reusable-actions-folder-path: './github/workflows'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+    name: Reusable PR Check
+    uses: ./.github/workflows/reusable-pr-check.yml
+    with:
+      is-local: true
+      reusable-actions-folder-path: './github/workflows'
