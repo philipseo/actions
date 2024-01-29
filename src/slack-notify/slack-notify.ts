@@ -18,7 +18,9 @@ async function slackNotify() {
 
     console.log('bbb', extendsSectionFields);
 
-    const parsedExtendsSectionFields = JSON.parse(extendsSectionFields);
+    const parsedExtendsSectionFields = extendsSectionFields
+      ? JSON.parse(extendsSectionFields)
+      : [];
 
     console.log('asdda', parsedExtendsSectionFields);
 
