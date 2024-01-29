@@ -1,24 +1,30 @@
-import { getInput, setFailed, setOutput } from '@actions/core';
+import { getInput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 import { WebClient } from '@slack/web-api';
 
+import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
+
 async function slackNotify() {
   try {
-    const channelId = getInput('channel-id', { required: true });
-    const botToken = getInput('bot-token', { required: true });
-    const title = getInput('title', { required: true });
-    const extendsSectionFields = getInput('extends-section-fields', {
-      required: false,
-    });
+    const channelId = getInput(GET_INPUT_KEY.CHANNEL_ID, { required: true });
+    const botToken = getInput(GET_INPUT_KEY.BOT_TOKEN, { required: true });
+    const title = getInput(GET_INPUT_KEY.TITLE, { required: true });
+    const extendsSectionFields = getInput(
+      GET_INPUT_KEY.EXTENDS_SECTION_FIELDS,
+      {
+        required: false,
+      },
+    );
+    console.log('aaaa', channelId, botToken, title, extendsSectionFields);
 
     const {
       actor,
+      runId,
       payload: { repository, pull_request },
     } = context;
     const branchName = pull_request?.head?.ref;
     const repositoryUrl = repository?.html_url;
 
-    console.log('aaa', extendsSectionFields);
     const blocks = [
       {
         type: 'header',
@@ -33,7 +39,7 @@ async function slackNotify() {
         fields: [
           {
             type: 'mrkdwn',
-            text: `*Repository*: <${repositoryUrl}|${repository?.name}|>`,
+            text: `*Repository*: <${repositoryUrl}|${repository?.name}>`,
           },
           {
             type: 'mrkdwn',
@@ -43,13 +49,23 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Author*: ${actor}`,
           },
+          {
+            type: 'mrkdwn',
+            text: `*Workflow*: <${repositoryUrl}/actions/runs/${runId}|link>`,
+          },
+          // ...extendsSectionFields,
         ],
       },
     ];
 
     const slackApi = new WebClient(botToken);
 
-    await slackApi.chat.postMessage({ channel: channelId, blocks });
+    console.log('aaa', botToken, channelId, title, blocks);
+    await slackApi.chat.postMessage({
+      text: `${title}`,
+      channel: channelId,
+      blocks,
+    });
   } catch (error) {
     if (error instanceof Error) {
       setFailed(error.message);

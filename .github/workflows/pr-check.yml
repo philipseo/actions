@@ -13,24 +13,14 @@ concurrency:
 #  PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
-  slack-notify:
+  pr-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code Repository
-        uses: actions/checkout@v4
-
-      - name: test
-        id: test
-        uses: ./actions/slack-notify
+      - name: Reusable PR Check
+        uses: philipseo/actions/.github/workflows/reusable-pr-check.yml@main
         with:
-          title: 'Test :rocket:'
-          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          extends-section-fields: |
-            {
-              custom: 'custom',
-              custom2: 'custom2'
-            }
-
-      - name: Echo
-        run: echo ${{ steps.test.outputs.context }}
+          is-local: true
+          reusable-actions-folder-path: './actions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}

@@ -5,17 +5,17 @@ on:
     inputs:
       is-local:
         default: false
-        description: 'Boolean flag indicating whether the workflow is running locally or within GitHub Actions environment.'
+        description: 'Is local'
         type: boolean
         required: false
-      reusable-action-folder-path:
-        default: './.github/reusable-actions'
-        description: 'The path to the folder containing reusable actions'
+      reusable-actions-folder-path:
+        default: './.github/reusable-actions/actions'
+        description: 'The path to the folder containing reusable actions. When running the workflow locally, specify the path to the folder containing reusable actions.'
         type: string
         required: false
-      lint-command:
-        default: 'pnpm lint'
-        description: 'The lint command to run'
+      test-command:
+        default: 'pnpm test'
+        description: 'The test command to run'
         type: string
         required: false
 
@@ -35,14 +35,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: philipseo/actions
-          path: ${{ inputs.reusable-action-folder-path }}
+          path: ${{ inputs.reusable-actions-folder-path }}
 
       - name: Install Node.js
-        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-node
+        uses: ${{ inputs.reusable-actions-folder-path }}/install-node
 
       - name: Install PNPM Dependencies
-        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-pnpm
+        uses: ${{ inputs.reusable-actions-folder-path }}/install-pnpm
 
-      - name: Run lint
+      - name: Run Test
         shell: bash
-        run: ${{ inputs.lint-command }}
+        run: ${{ inputs.test-command }}

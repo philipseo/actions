@@ -8,5 +8,8 @@
 ### Dependencies ###
 node_modules/
 
+### Testing ###
+coverage/
+
 ### Etc ###
 *.log
