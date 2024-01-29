@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Reusable lint
-        uses: philipseo/actions/.github/workflows/reusable-lint.yml@main
+        uses: ${{ inputs.reusable-action-folder-path }}/workflows/reusable-lint
         with:
           is-local: ${{ inputs.is-local }}
           reusable-action-folder-path: ${{ inputs.reusable-action-folder-path }}
@@ -48,7 +48,7 @@ jobs:
     needs: [lint]
     steps:
       - name: Reusable test
-        uses: philipseo/actions/.github/workflows/reusable-test.yml@main
+        uses: ${{ inputs.reusable-action-folder-path }}/workflows/reusable-test
         with:
           is-local: ${{ inputs.is-local }}
           reusable-action-folder-path: ${{ inputs.reusable-action-folder-path }}

@@ -20,7 +20,7 @@ jobs:
         uses: ./.github/workflows/reusable-pr-check.yml
         with:
           is-local: true
-          reusable-actions-folder-path: './actions'
+          reusable-actions-folder-path: './github/workflows'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
