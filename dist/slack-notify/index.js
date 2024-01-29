@@ -37123,11 +37123,11 @@ async function slackNotify() {
                 fields: [
                     {
                         type: 'mrkdwn',
-                        text: `*Repository*: <${repository?.name}|${repositoryUrl}>`,
+                        text: `*Repository*: <${repositoryUrl}|${repository?.name}|>`,
                     },
                     {
                         type: 'mrkdwn',
-                        text: `*Branch*: <${branchName}|${repositoryUrl}/tree/${branchName}>`,
+                        text: `*Branch*: <${repositoryUrl}/tree/${branchName}|${branchName}>`,
                     },
                     {
                         type: 'mrkdwn',

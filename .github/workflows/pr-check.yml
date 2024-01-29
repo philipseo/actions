@@ -23,7 +23,7 @@ jobs:
         id: test
         uses: ./actions/slack-notify
         with:
-          title: '제목입니당'
+          title: 'Test :rocket:'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           extends-section-fields: |

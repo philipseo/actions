@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "pnpm build:slack-notify",
+    "build": "rm -rf dist && pnpm build:slack-notify",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -o dist/slack-notify/",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
