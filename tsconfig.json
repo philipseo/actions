@@ -1,0 +1,13 @@
+{
+  "extends": "@philipseo/configs/tsconfig/node",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["src/*"],
+    },
+  },
+  "include": ["**/*.ts"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+  },
+}

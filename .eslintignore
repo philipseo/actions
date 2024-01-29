@@ -1,15 +1,22 @@
 ### OS ###
-.DS_*/
+.DS_*
 
 ### IDE ###
 ### Jetbrains ###
-.idea/
+.idea
 
 ### Dependencies ###
-node_modules/
+node_modules
+pnpm-lock.yaml
+
+### Husky ###
+.husky
 
 ### Testing ###
 coverage/
+
+### Build ###
+dist/
 
 ### Etc ###
 *.log

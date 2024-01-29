@@ -1,4 +1,4 @@
-name: Reusable lint
+name: Reusable test
 
 on:
   workflow_call:
@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,14 +24,14 @@ jobs:
 #        uses: actions/checkout@v4
 #        with:
 #          repository: philipseo/actions
-#          path: ${{ inputs.reusable-action-folder-path }}
+#          path: ${{ inputs.reusable-actions-folder-path }}
 #
 #      - name: Install Node.js
-#        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-node
+#        uses: ${{ inputs.reusable-actions-folder-path }}/install-node
 #
 #      - name: Install PNPM Dependencies
-#        uses: ${{ inputs.reusable-action-folder-path }}/actions/install-pnpm
+#        uses: ${{ inputs.reusable-actions-folder-path }}/install-pnpm
 #
-#      - name: Run lint
+#      - name: Run Test
 #        shell: bash
-#        run: ${{ inputs.lint-command }}
+#        run: ${{ inputs.test-command }}

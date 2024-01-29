@@ -1,10 +1,10 @@
-name: Reusable versioning workflow
+name: Reusable versioning
 
 on:
   workflow_call:
     inputs:
       release-command-execution:
-        default: true
+        default: false
         description: 'Specify whether to execute the release command. If set to true, the release command will be executed; otherwise, it will be skipped.'
         type: boolean
         required: false

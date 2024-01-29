@@ -11,3 +11,9 @@ pnpm-lock.yaml
 
 ### Husky ###
 .husky/
+
+### Testing ###
+coverage/
+
+### Build ###
+dist/
