@@ -14,4 +14,4 @@ jobs:
     uses: ./.github/workflows/reusable-pr-check.yml
     with:
       is-local: true
-      reusable-actions-folder-path: './github/workflows'
+      reusable-actions-folder-path: './.github/workflows'
