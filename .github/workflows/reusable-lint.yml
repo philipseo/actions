@@ -8,16 +8,6 @@ on:
         description: 'Boolean flag indicating whether the workflow is running locally or within GitHub Actions environment.'
         type: boolean
         required: false
-      reusable-action-folder-path:
-        default: './.github/reusable-actions'
-        description: 'The path to the folder containing reusable actions'
-        type: string
-        required: false
-      lint-command:
-        default: 'pnpm lint'
-        description: 'The lint command to run'
-        type: string
-        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

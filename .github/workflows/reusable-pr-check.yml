@@ -8,11 +8,6 @@ on:
         description: 'Is local'
         type: boolean
         required: false
-      reusable-actions-folder-path:
-        default: './.github/reusable-actions'
-        description: 'The path to the folder containing reusable actions'
-        type: string
-        required: false
       lint-commend:
         default: 'pnpm lint'
         description: 'The lint command to run'
@@ -33,13 +28,19 @@ concurrency:
 #  PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
-  lint:
+  local-lint:
+    if: ${{ inputs.is-local == 'true' }}
     name: Reusable lint
-    uses: ${{ inputs.reusable-action-folder-path }}/workflows/reusable-lint.yml
+    uses: ./.github/workflows/reusable-lint.yml
     with:
       is-local: ${{ inputs.is-local }}
-      reusable-action-folder-path: ${{ inputs.reusable-action-folder-path }}
-      lint-commend: ${{ inputs.lint-commend }}
+
+  lint:
+    if: ${{ inputs.is-local == 'false }}
+    name: Reusable lint
+    uses: philipseo/actions/.github/workflows/reusable-lint.yml@main
+    with:
+      is-local: ${{ inputs.is-local }}
 #
 #  test:
 #    runs-on: ubuntu-latest

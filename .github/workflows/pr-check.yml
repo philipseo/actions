@@ -7,7 +7,6 @@ on:
 jobs:
   pr-check:
     name: Reusable PR Check
-    uses: .github/workflows/reusable-pr-check.yml
+    uses: ./.github/workflows/reusable-pr-check.yml
     with:
       is-local: true
-      reusable-actions-folder-path: '.github/workflows'
