@@ -8,7 +8,7 @@ on:
         description: 'Is local'
         type: boolean
         required: false
-      reusable-action-folder-path:
+      reusable-actions-folder-path:
         default: './.github/reusable-actions'
         description: 'The path to the folder containing reusable actions'
         type: string
