@@ -27,8 +27,10 @@ jobs:
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           extends-section-fields: |
-            *Custom1*: ${{ github.event.repository.name }}
-            *Custom2*: example
+            {
+              custom: 'custom',
+              custom2: 'custom2'
+            }
 
       - name: Echo
         run: echo ${{ steps.test.outputs.context }}

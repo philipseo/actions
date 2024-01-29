@@ -1,63 +1,60 @@
-import * as core from '@actions/core';
-import * as github from '@actions/github';
+import { getInput, setFailed, setOutput } from '@actions/core';
+import { context } from '@actions/github';
 import { WebClient } from '@slack/web-api';
 
 async function slackNotify() {
   try {
-    const channelId = core.getInput('channel-id', { required: true });
-    const botToken = core.getInput('bot-token', { required: true });
-    const title = core.getInput('title', { required: true });
-    const extendsSectionFields = core.getInput('extends-section-fields', {
+    const channelId = getInput('channel-id', { required: true });
+    const botToken = getInput('bot-token', { required: true });
+    const title = getInput('title', { required: true });
+    const extendsSectionFields = getInput('extends-section-fields', {
       required: false,
     });
 
-    const context = {
-      github: github.context,
-      inputs: {
-        channelId,
-        botToken,
-        title,
-        extendsSectionFields,
+    const {
+      actor,
+      payload: { repository, pull_request },
+    } = context;
+    const branchName = pull_request?.head?.ref;
+    const repositoryUrl = repository?.html_url;
+
+    console.log('aaa', extendsSectionFields);
+    const blocks = [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: title,
+          emoji: true,
+        },
       },
-    };
-    core.setOutput('context', context);
-    console.log('aaa', context);
-    // const blocks = [
-    //   {
-    //     type: 'header',
-    //     text: {
-    //       type: 'plain_text',
-    //       text: title,
-    //       emoji: true,
-    //     },
-    //   },
-    //   {
-    //     type: 'section',
-    //     fields: [
-    //       {
-    //         type: 'mrkdwn',
-    //         text: `*Repository*: <${{ github.event.repository.name }}|${{ github.repositoryUrl }}>`,
-    //       },
-    //       {
-    //         type: 'mrkdwn',
-    //         text: `*Branch*: ${{ github.ref_name }}`,
-    //       },
-    //       {
-    //         type: 'mrkdwn',
-    //         text: `*Author*: ${{ github.event.head_commit.author.name }}`,
-    //       }
-    //     ],
-    //   },
-    // ];
+      {
+        type: 'section',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*Repository*: <${repository?.name}|${repositoryUrl}>`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Branch*: <${branchName}|${repositoryUrl}/tree/${branchName}>`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Author*: ${actor}`,
+          },
+        ],
+      },
+    ];
 
-    // const slackApi = new WebClient(botToken);
+    const slackApi = new WebClient(botToken);
 
-    // await slackApi.chat.postMessage({ channel: channelId, blocks });
+    await slackApi.chat.postMessage({ channel: channelId, blocks });
   } catch (error) {
     if (error instanceof Error) {
-      core.setFailed(error.message);
+      setFailed(error.message);
     } else {
-      core.setFailed('Unknown error');
+      setFailed('Unknown error');
     }
   }
 }

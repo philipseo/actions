@@ -14,9 +14,6 @@ inputs:
   extends-section-fields:
     description: 'Slack notify extends section fields'
     required: false
-outputs:
-  context:
-    description: 'Slack notify context'
 
 runs:
   using: 'node20'
