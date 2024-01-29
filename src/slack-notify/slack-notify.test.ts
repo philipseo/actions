@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import { WebClient } from '@slack/web-api';
 
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
@@ -20,7 +21,29 @@ jest.mock('@actions/github', () => {
   };
 });
 
+jest.mock('@slack/web-api', () => {
+  return {
+    WebClient: jest.fn().mockImplementation(() => {
+      return {
+        auth: {
+          test: () => {
+            return { ok: true };
+          },
+        },
+        chat: {
+          postMessage: () => {
+            return { ok: true };
+          },
+        },
+      };
+    }),
+  };
+});
+
 describe('slackNotify', () => {
+  beforeAll(() => {
+    new WebClient();
+  });
   beforeEach(() => {
     jest.resetAllMocks();
   });
