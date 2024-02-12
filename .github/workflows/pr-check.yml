@@ -34,9 +34,17 @@ jobs:
       - name: Install PNPM Dependencies
         uses: ./actions/install-pnpm
 
-      - name: Run test
+      - name: Run Build
+        shell: bash
+        run: pnpm build
+
+      - name: Run Test
         shell: bash
         run: pnpm test
+
+      - name: Create test Coverage Comment
+        shell: bash
+        run: ./actions/create-test-coverage-comment
 
   failed-slack-notify:
     if: ${{ failure() }}

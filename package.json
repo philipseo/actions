@@ -10,8 +10,9 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf dist && pnpm build:slack-notify",
+    "build": "rm -rf dist && pnpm build:slack-notify && pnpm build:create-test-coverage-comment",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -m -o dist/slack-notify/",
+    "build:create-test-coverage-comment": "ncc build src/create-test-coverage-comment/index.ts -m -o dist/create-test-coverage-comment/",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
     "prettier": "prettier . --check",
@@ -24,6 +25,7 @@
   "dependencies": {
     "@actions/core": "1.10.1",
     "@actions/github": "6.0.0",
+    "@octokit/rest": "20.0.2",
     "@slack/web-api": "7.0.1"
   },
   "devDependencies": {
