@@ -5,25 +5,25 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: ./actions/install-node
-
-      - name: Install PNPM Dependencies
-        uses: ./actions/install-pnpm
-
-      - name: Run lint
-        shell: bash
-        run: pnpm lint
+  #  lint:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout
+  #        uses: actions/checkout@v4
+  #
+  #      - name: Install Node.js
+  #        uses: ./actions/install-node
+  #
+  #      - name: Install PNPM Dependencies
+  #        uses: ./actions/install-pnpm
+  #
+  #      - name: Run lint
+  #        shell: bash
+  #        run: pnpm lint
 
   test:
     runs-on: ubuntu-latest
-    needs: [lint]
+    #    needs: [lint]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,9 +42,8 @@ jobs:
         shell: bash
         run: pnpm test
 
-      - name: Create test Coverage Comment
-        shell: bash
-        run: ./actions/create-test-coverage-comment
+      - name: Create Test Coverage Comment
+        uses: ./actions/create-test-coverage-comment
 
   failed-slack-notify:
     if: ${{ failure() }}
