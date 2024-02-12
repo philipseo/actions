@@ -2,7 +2,7 @@ import { setFailed } from '@actions/core';
 import { Octokit } from '@octokit/rest';
 
 import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
-import Context from '#/utils/actions-toolkit/utils/context/context';
+import { Context } from '#/utils/actions-toolkit/utils';
 import inputProxy from '#/utils/actions-toolkit/utils/input-proxy/input-proxy';
 import outputProxy from '#/utils/actions-toolkit/utils/output-proxy/output-proxy';
 import getErrorMessage from '#/utils/get-error-message/get-error-message';

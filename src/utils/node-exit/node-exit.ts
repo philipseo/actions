@@ -1,15 +1,12 @@
-const EXIT_CODE = {
-  SUCCESS: 0,
-  FAILURE: 1,
-} as const;
+import { NODE_EXIT_CODE } from '#/utils/node-exit/node-exit.constants';
 
 class NodeExit {
   public success() {
-    process.exit(EXIT_CODE.SUCCESS);
+    process.exit(NODE_EXIT_CODE.SUCCESS);
   }
 
   public failure() {
-    process.exit(EXIT_CODE.FAILURE);
+    process.exit(NODE_EXIT_CODE.FAILURE);
   }
 }
 
