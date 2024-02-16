@@ -16,7 +16,7 @@ describe('getErrorMessage', () => {
     expect(errorMessage).toBe(MOCK_ERROR_MESSAGE);
   });
 
-  it('✅ should return "Unknown error" if the error is neither an instance of Error nor a string', () => {
+  test('✅ should return "Unknown error" if the error is neither an instance of Error nor a string', () => {
     const error = 123;
     const errorMessage = getErrorMessage(error as unknown);
 

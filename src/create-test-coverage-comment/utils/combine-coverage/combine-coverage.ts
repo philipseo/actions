@@ -38,6 +38,7 @@ async function combineCoverage() {
     coverageMap,
   });
   const report = create('text', { file: COVERAGE_TXT_FILE_NAME });
+
   report.execute(reportContext);
 }
 
