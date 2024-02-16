@@ -2,8 +2,6 @@ import { COVERAGE_COMMENT_DEFAULT_MESSAGE } from '#/create-test-coverage-comment
 import ActionsToolkit from '#/utils/actions-toolkit/actions-toolkit';
 
 async function getExistingTestCoverageComment(toolkit: ActionsToolkit) {
-  console.log('toolkit.context.payload', toolkit.context.payload);
-
   const comments = await toolkit.github.rest.issues.listComments({
     ...toolkit.context.repository,
     issue_number: toolkit.context.pullRequest.number,

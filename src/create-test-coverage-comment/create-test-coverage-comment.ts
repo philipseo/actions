@@ -33,6 +33,4 @@ async function createTestCoverageComment() {
   }
 }
 
-createTestCoverageComment().then(() => {});
-
 export default createTestCoverageComment;

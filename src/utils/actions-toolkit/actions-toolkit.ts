@@ -30,8 +30,8 @@ class ActionsToolkit {
   }
 
   public failure(error: unknown) {
-    this.nodeExit.failure();
     setFailed(getErrorMessage(error));
+    this.nodeExit.failure();
   }
 }
 
