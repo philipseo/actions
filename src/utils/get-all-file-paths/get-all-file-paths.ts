@@ -6,7 +6,7 @@ import { getRootPath, isIgnoredPattern } from '@philipseo/scripts';
 
 import { FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE } from '#/utils/get-all-file-paths/get-all-file-paths.constants';
 
-interface getAllFilePathsProps {
+interface GetAllFilePathsProps {
   filename: string;
   ignorePatterns: string[];
 }
@@ -14,7 +14,7 @@ interface getAllFilePathsProps {
 async function getAllFilePaths({
   filename,
   ignorePatterns,
-}: getAllFilePathsProps) {
+}: GetAllFilePathsProps) {
   const rootPath = await getRootPath();
   const paths: string[] = [];
 

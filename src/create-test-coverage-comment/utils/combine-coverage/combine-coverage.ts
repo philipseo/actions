@@ -33,6 +33,7 @@ async function combineCoverage() {
   });
 
   const rootPath = await getRootPath();
+  console.log('rootPath', rootPath);
   const reportContext = createContext({
     dir: rootPath,
     coverageMap,

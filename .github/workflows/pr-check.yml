@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Test
         shell: bash
-        run: pnpm test
+        run: pnpm test:coverage
 
       - name: Create Test Coverage Comment
         uses: ./actions/create-test-coverage-comment

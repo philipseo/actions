@@ -2,7 +2,7 @@ import { setOutput } from '@actions/core';
 
 import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
 
-function outputProxy() {
+function createOutputProxy() {
   return new Proxy<ObjectType>({} as ObjectType, {
     set(originalObject: ObjectType, name: string, value: string) {
       setOutput(name, value);
@@ -13,4 +13,4 @@ function outputProxy() {
   });
 }
 
-export default outputProxy;
+export default createOutputProxy;

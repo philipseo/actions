@@ -2,7 +2,7 @@ import { getInput } from '@actions/core';
 
 import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
 
-function inputProxy() {
+function createInputProxy() {
   return new Proxy<ObjectType>({} as ObjectType, {
     get(_, name: string) {
       return getInput(name);
@@ -10,4 +10,4 @@ function inputProxy() {
   });
 }
 
-export default inputProxy;
+export default createInputProxy;

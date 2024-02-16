@@ -9,9 +9,11 @@ import {
 
 async function generateComment() {
   const rootPath = await getRootPath();
+  console.log('rootPath2', rootPath);
   const coverageReportContent = await readFile(
     `${rootPath}/${COVERAGE_TXT_FILE_NAME}`,
   );
+  console.log('coverageReportContent', coverageReportContent.toString());
 
   return `${COVERAGE_COMMENT_DEFAULT_MESSAGE}
 \`\`\`javascript
