@@ -11,7 +11,7 @@ node_modules/
 ### Testing ###
 coverage/
 
-## Outputs ###
+### Outputs ###
 dist/
 
 ### Etc ###
