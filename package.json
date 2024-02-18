@@ -33,7 +33,7 @@
     "istanbul-reports": "^3.1.6"
   },
   "devDependencies": {
-    "@philipseo/configs": "0.0.6",
+    "@philipseo/configs": "0.0.8",
     "@types/istanbul-lib-coverage": "2.0.6",
     "@types/istanbul-lib-report": "3.0.3",
     "@types/istanbul-reports": "3.0.4",

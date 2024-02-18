@@ -32,8 +32,8 @@ dependencies:
 
 devDependencies:
   '@philipseo/configs':
-    specifier: 0.0.6
-    version: 0.0.6(eslint-plugin-import@2.29.1)(postcss@8.4.35)
+    specifier: 0.0.8
+    version: 0.0.8(eslint-plugin-import@2.29.1)(postcss@8.4.35)
   '@types/istanbul-lib-coverage':
     specifier: 2.0.6
     version: 2.0.6
@@ -971,8 +971,8 @@ packages:
       '@octokit/openapi-types': 19.1.0
     dev: false
 
-  /@philipseo/configs@0.0.6(eslint-plugin-import@2.29.1)(postcss@8.4.35):
-    resolution: {integrity: sha512-wDuzyjYJBxe3qiAn6/RIYTYe4ZQHBfWgnPXN4gPvxGX/HE+/WurVTOgnlUaqgVlXDDFLhn7zzhB+OuS47lF3NA==}
+  /@philipseo/configs@0.0.8(eslint-plugin-import@2.29.1)(postcss@8.4.35):
+    resolution: {integrity: sha512-SEigetpd7olkr3hQDPTL7RHK7kx8DUyFLPrzG4apZuPl5yte/Xrvnjor+fKWYn+ungBMC/EyYNq4JobAJ9Vxtg==}
     dependencies:
       '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.2.4)
       '@typescript-eslint/eslint-plugin': 6.19.0(@typescript-eslint/parser@6.19.0)(eslint@8.56.0)(typescript@5.3.3)

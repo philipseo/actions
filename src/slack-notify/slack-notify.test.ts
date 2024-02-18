@@ -1,9 +1,7 @@
+import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
 import * as utils from '#/utils';
-
-const mockToolkitSuccess = jest.fn();
-const mockToolkitFailure = jest.fn();
 
 const mockInputs = {
   [GET_INPUT_KEY.CHANNEL_ID]: 'mockChannelId',
@@ -27,7 +25,7 @@ const mockActionsToolkit = {
       },
     },
   },
-  success: mockToolkitSuccess,
+  success: MOCK_TOOLKIT_SUCCESS,
 };
 
 jest.mock('@slack/web-api', () => {
@@ -62,7 +60,7 @@ describe('slackNotify', () => {
     await slackNotify();
 
     expect(utils.ActionsToolkit).toHaveBeenCalled();
-    expect(mockToolkitSuccess).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
   test('✅ Send slack notification with extendsSectionFields', async () => {
@@ -86,7 +84,7 @@ describe('slackNotify', () => {
     await slackNotify();
 
     expect(utils.ActionsToolkit).toHaveBeenCalled();
-    expect(mockToolkitSuccess).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
   test('❗ should handle failure correctly', async () => {
@@ -94,13 +92,13 @@ describe('slackNotify', () => {
     // @ts-ignore
     jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
       return {
-        failure: mockToolkitFailure,
+        failure: MOCK_TOOLKIT_FAILURE,
       };
     });
 
     await slackNotify();
 
     expect(utils.ActionsToolkit).toHaveBeenCalled();
-    expect(mockToolkitFailure).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_FAILURE).toHaveBeenCalled();
   });
 });
