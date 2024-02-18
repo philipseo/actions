@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf dist && pnpm build:slack-notify && pnpm build:create-test-coverage-comment",
+    "build": "rm -rf dist && pnpm build:slack-notify && pnpm build:upsert-test-coverage-comment",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -m -o dist/slack-notify/",
     "build:upsert-test-coverage-comment": "ncc build src/upsert-test-coverage-comment/index.ts -m -o dist/upsert-test-coverage-comment/",
     "eslint": "eslint .",

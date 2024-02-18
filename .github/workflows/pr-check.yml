@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: pnpm test:coverage
 
-      - name: Create Test Coverage Comment
+      - name: Upsert Test Coverage Comment
         uses: ./actions/upsert-test-coverage-comment
         with:
           github-token: ${{ secrets.GH_TOKEN }}
@@ -70,10 +70,3 @@ jobs:
           title: 'Failed PR Check'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          extends-section-fields: |
-            [
-              {
-                "type": "mrkdwn",
-                "text": "*Workflow*: <${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|link>"
-              }
-            ]
