@@ -1,39 +1,37 @@
-import * as core from '@actions/core';
-import { WebClient } from '@slack/web-api';
-
+import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
+import * as utils from '#/utils';
 
-const MOCK_CHANNEL_ID = 'mockChannelId';
-const MOCK_BOT_TOKEN = 'mockBotToken';
-const MOCK_TITLE = 'mockTitle';
-
-jest.mock('@actions/github', () => {
-  return {
-    context: {
-      actor: 'mockActor',
-      payload: {
-        repository: {
-          name: 'mockRepository',
-          html_url: 'https://github.com/mock/mockRepository',
+const mockInputs = {
+  [GET_INPUT_KEY.CHANNEL_ID]: 'mockChannelId',
+  [GET_INPUT_KEY.BOT_TOKEN]: 'mockBotToken',
+  [GET_INPUT_KEY.TITLE]: 'mockTitle',
+};
+const mockActionsToolkit = {
+  context: {
+    payload: {
+      repository: {
+        owner: {
+          login: 'mockOwner',
         },
-        pull_request: {
-          head: { ref: 'mockBranch' },
+        name: 'mockRepo-name',
+        html_url: 'https://github.com/owner/repo',
+      },
+      pull_request: {
+        head: {
+          ref: 'mockBranchName',
         },
       },
     },
-  };
-});
+  },
+  success: MOCK_TOOLKIT_SUCCESS,
+};
 
 jest.mock('@slack/web-api', () => {
   return {
     WebClient: jest.fn().mockImplementation(() => {
       return {
-        auth: {
-          test: () => {
-            return { ok: true };
-          },
-        },
         chat: {
           postMessage: () => {
             return { ok: true };
@@ -44,78 +42,63 @@ jest.mock('@slack/web-api', () => {
   };
 });
 
-function getInputValue(name: string, isNullExtendSectionFields?: boolean) {
-  const MOCK_EXTENDS_SECTION_FIELDS = `[
-  {
-    "type": "mrkdwn",
-    "text": "test1"
-  },
-  {
-    "type": "mrkdwn",
-    "text": "test2"
-  }
-]`;
-  switch (name) {
-    case GET_INPUT_KEY.CHANNEL_ID:
-      return MOCK_CHANNEL_ID;
-    case GET_INPUT_KEY.BOT_TOKEN:
-      return MOCK_BOT_TOKEN;
-    case GET_INPUT_KEY.TITLE:
-      return MOCK_TITLE;
-    case GET_INPUT_KEY.EXTENDS_SECTION_FIELDS:
-      return isNullExtendSectionFields ? MOCK_EXTENDS_SECTION_FIELDS : '';
-    default:
-      return '';
-  }
-}
-
 describe('slackNotify', () => {
-  beforeAll(() => {
-    new WebClient();
-  });
   beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   test('✅ Send slack notification without extendsSectionFields', async () => {
-    jest.spyOn(core, 'getInput').mockImplementation((name) => {
-      return getInputValue(name, true);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
+      return {
+        ...mockActionsToolkit,
+        inputs: mockInputs,
+      };
     });
 
     await slackNotify();
 
-    expect(core.getInput).toHaveBeenCalledTimes(4);
+    expect(utils.ActionsToolkit).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
   test('✅ Send slack notification with extendsSectionFields', async () => {
-    jest.spyOn(core, 'getInput').mockImplementation((name) => {
-      return getInputValue(name);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
+      return {
+        ...mockActionsToolkit,
+        inputs: {
+          ...mockInputs,
+          [GET_INPUT_KEY.EXTENDS_SECTION_FIELDS]: JSON.stringify([
+            {
+              type: 'mrkdwn',
+              text: `*Test*: test`,
+            },
+          ]),
+        },
+      };
     });
 
     await slackNotify();
 
-    expect(core.getInput).toHaveBeenCalledTimes(4);
+    expect(utils.ActionsToolkit).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
-  test('❗ Has an error send slack notification', async () => {
-    const errorInstanceMessage = 'mockError';
-
-    jest.spyOn(core, 'setFailed').mockImplementation(() => {});
-
-    jest.spyOn(core, 'getInput').mockImplementationOnce(() => {
-      throw new Error(errorInstanceMessage);
+  test('❗ should handle failure correctly', async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
+      return {
+        failure: MOCK_TOOLKIT_FAILURE,
+      };
     });
 
     await slackNotify();
 
-    expect(core.setFailed).toHaveBeenCalledWith(errorInstanceMessage);
-
-    jest.spyOn(core, 'getInput').mockImplementationOnce(() => {
-      throw 'test';
-    });
-
-    await slackNotify();
-
-    expect(core.setFailed).toHaveBeenCalledWith('Unknown error');
+    expect(utils.ActionsToolkit).toHaveBeenCalled();
+    expect(MOCK_TOOLKIT_FAILURE).toHaveBeenCalled();
   });
 });

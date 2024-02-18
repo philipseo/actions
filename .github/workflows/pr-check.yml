@@ -34,10 +34,18 @@ jobs:
       - name: Install PNPM Dependencies
         uses: ./actions/install-pnpm
 
-      - name: Run test
+      - name: Run Build upsetTestCoverageComment
         shell: bash
-        run: pnpm test
+        run: pnpm build:upsert-test-coverage-comment
 
+      - name: Run Test
+        shell: bash
+        run: pnpm test:coverage
+
+      - name: Upsert Test Coverage Comment
+        uses: ./actions/upsert-test-coverage-comment
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
   failed-slack-notify:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
@@ -46,16 +54,19 @@ jobs:
       - name: Checkout code Repository
         uses: actions/checkout@v4
 
+      - name: Install Node.js
+        uses: ./actions/install-node
+
+      - name: Install PNPM Dependencies
+        uses: ./actions/install-pnpm
+
+      - name: Run Build slackNotify
+        shell: bash
+        run: pnpm build:slack-notify
+
       - name: Slack notify2
         uses: ./actions/slack-notify
         with:
           title: 'Failed PR Check'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          extends-section-fields: |
-            [
-              {
-                "type": "mrkdwn",
-                "text": "*Workflow*: <${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|link>"
-              }
-            ]

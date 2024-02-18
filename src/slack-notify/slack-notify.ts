@@ -1,30 +1,26 @@
-import { getInput, setFailed } from '@actions/core';
-import { context } from '@actions/github';
 import { WebClient } from '@slack/web-api';
 
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
+import { ActionsToolkit } from '#/utils';
 
 async function slackNotify() {
-  try {
-    const channelId = getInput(GET_INPUT_KEY.CHANNEL_ID, { required: true });
-    const botToken = getInput(GET_INPUT_KEY.BOT_TOKEN, { required: true });
-    const title = getInput(GET_INPUT_KEY.TITLE, { required: true });
-    const extendsSectionFields = getInput(
-      GET_INPUT_KEY.EXTENDS_SECTION_FIELDS,
-      {
-        required: false,
-      },
-    );
+  const toolkit = new ActionsToolkit();
 
-    const parsedExtendsSectionFields = extendsSectionFields
-      ? JSON.parse(extendsSectionFields)
+  try {
+    const channelId = toolkit.inputs[GET_INPUT_KEY.CHANNEL_ID];
+    const botToken = toolkit.inputs[GET_INPUT_KEY.BOT_TOKEN];
+    const title = toolkit.inputs[GET_INPUT_KEY.TITLE];
+    const extendsSectionFields = toolkit.inputs[
+      GET_INPUT_KEY.EXTENDS_SECTION_FIELDS
+    ]
+      ? JSON.parse(toolkit.inputs[GET_INPUT_KEY.EXTENDS_SECTION_FIELDS])
       : [];
 
     const {
-      actor,
       payload: { repository, pull_request },
-    } = context;
+    } = toolkit.context;
     const branchName = pull_request?.head?.ref;
+    const owner = repository?.owner;
     const repositoryUrl = repository?.html_url;
 
     const blocks = [
@@ -49,9 +45,9 @@ async function slackNotify() {
           },
           {
             type: 'mrkdwn',
-            text: `*Author*: ${actor}`,
+            text: `*Author*: ${owner?.login}`,
           },
-          ...parsedExtendsSectionFields,
+          ...extendsSectionFields,
         ],
       },
     ];
@@ -63,17 +59,10 @@ async function slackNotify() {
       text: title,
       blocks,
     });
+
+    toolkit.success();
   } catch (error) {
-    if (error instanceof Error) {
-      // slack api mocking bug로 인하여 postMessage가 호출되면서 발생하는 에러는 무시
-      if (error.message.includes('postMessage')) {
-        console.log(error.message);
-      } else {
-        setFailed(error.message);
-      }
-    } else {
-      setFailed('Unknown error');
-    }
+    toolkit.failure(error);
   }
 }
 
