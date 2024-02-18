@@ -1,0 +1,27 @@
+name: Reusable lint workflow
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: philipseo/actions
+          path: ./.github/reusable-actions
+
+      - name: Install Node.js
+        uses: ./.github/reusable-actions/actions/install-node
+
+      - name: Install PNPM Dependencies
+        uses: ./.github/reusable-actions/actions/install-pnpm
+
+      - name: Run lint
+        shell: bash
+        run: pnpm lint

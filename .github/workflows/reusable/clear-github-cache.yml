@@ -3,13 +3,9 @@ name: Reusable clear github cache
 on:
   workflow_call:
     secrets:
-      GH_TOKEN:
+      github-token:
         description: 'A token passed from the caller workflow'
         required: true
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   reusable-clear-github-cache:
@@ -17,7 +13,7 @@ jobs:
     steps:
       - name: Cleanup
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.github-token }}
         run: |
           gh extension install actions/gh-actions-cache
 

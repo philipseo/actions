@@ -1,0 +1,57 @@
+name: Versioning
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  repository-owner: ${{ github.repository_owner }}
+  repository-name: ${{ github.event.repository.name }}
+  pull-request-number: ${{ github.event.pull_request.number }}
+  username: ${{ github.event.pull_request.merged_by.login }}
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.github-token }}
+
+      - name: Install Node.js
+        uses: ./actions/install-node
+
+      - name: Run Versioning
+        shell: bash
+        run: npx -p @philipseo/scripts versioning ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
+
+      - name: Install PNPM Dependencies
+        uses: ./actions/install-pnpm
+
+      - name: Run prettier:fix
+        shell: bash
+        run: pnpm prettier:fix
+
+      - name: Version Update Commit
+        run: |
+          git config user.name "${{ env.username }}"
+          git config user.email "${{ env.username }}@users.noreply.github.com"
+          git add .
+          git commit -m 'Release'
+          git push origin main --force
+
+      - name: Release
+        if: ${{ inputs.release-command-execution == 'true' }}
+        shell: bash
+        run: pnpm release
+
+      - name: Create Github Release
+        shell: bash
+        run: npx -p @philipseo/scripts create-github-release ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }}

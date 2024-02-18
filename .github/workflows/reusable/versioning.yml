@@ -9,13 +9,9 @@ on:
         type: boolean
         required: false
     secrets:
-      GH_TOKEN:
+      github-token:
         description: 'A token passed from the caller workflow'
         required: true
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
   repository-owner: ${{ github.repository_owner }}
@@ -30,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.github-token }}
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,7 +39,7 @@ jobs:
 
       - name: Run Versioning
         shell: bash
-        run: npx -p @philipseo/scripts versioning ${{ secrets.GH_TOKEN }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
+        run: npx -p @philipseo/scripts versioning ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }} ${{ env.pull-request-number }}
 
       - name: Install PNPM Dependencies
         uses: ./.github/reusable-actions/actions/install-pnpm
@@ -67,4 +63,4 @@ jobs:
 
       - name: Create Github Release
         shell: bash
-        run: npx -p @philipseo/scripts create-github-release ${{ secrets.GH_TOKEN }} ${{ env.repository-owner }} ${{ env.repository-name }}
+        run: npx -p @philipseo/scripts create-github-release ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }}

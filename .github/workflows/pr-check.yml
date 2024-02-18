@@ -46,6 +46,7 @@ jobs:
         uses: ./actions/upsert-test-coverage-comment
         with:
           github-token: ${{ secrets.GH_TOKEN }}
+
   failed-slack-notify:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
@@ -64,7 +65,7 @@ jobs:
         shell: bash
         run: pnpm build:slack-notify
 
-      - name: Slack notify2
+      - name: Slack notify
         uses: ./actions/slack-notify
         with:
           title: 'Failed PR Check'
