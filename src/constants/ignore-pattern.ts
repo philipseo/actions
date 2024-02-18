@@ -1,1 +1,1 @@
-export const DEFAULT_IGNORE_PATTERNS = ['.husky', '.github', 'actions'];
+export const DEFAULT_IGNORE_PATTERNS = ['.husky', '.github', 'actions', 'src'];

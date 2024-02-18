@@ -2,6 +2,8 @@
 
 Error type에 따른 Error Message를 반환하는 함수
 
+---
+
 ## Usage
 
 ```typescript

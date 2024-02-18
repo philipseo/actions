@@ -1,9 +1,9 @@
 import { getInput } from '@actions/core';
 
-import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
+import { CreateInputProxyProps } from '#/utils/actions-toolkit/utils/create-input-proxy/create-input-proxy.types';
 
 function createInputProxy() {
-  return new Proxy<ObjectType>({} as ObjectType, {
+  return new Proxy<CreateInputProxyProps>({} as CreateInputProxyProps, {
     get(_, name: string) {
       return getInput(name);
     },

@@ -8,4 +8,4 @@ inputs:
 
 runs:
   using: 'node20'
-  main: '../../dist/create-test-coverage-comment/index.js'
+  main: '../../dist/upsert-test-coverage-comment/index.js'

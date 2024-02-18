@@ -2,6 +2,8 @@
 
 반복되는 process.exit 코드 중복을 줄이기 위해 만든 모듈입니다.
 
+---
+
 ## Usage
 
 ```typescript

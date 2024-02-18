@@ -7,11 +7,12 @@ import {
   createInputProxy,
   createOutputProxy,
 } from '#/utils/actions-toolkit/utils';
+import { CreateInputProxyProps } from '#/utils/actions-toolkit/utils/create-input-proxy/create-input-proxy.types';
 import getErrorMessage from '#/utils/get-error-message/get-error-message';
 import NodeExit from '#/utils/node-exit/node-exit';
 
 class ActionsToolkit {
-  public inputs: ObjectType;
+  public inputs: CreateInputProxyProps;
   public outputs: ObjectType;
   public token: string;
   public github: Octokit;

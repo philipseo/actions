@@ -1,4 +1,4 @@
-import { COVERAGE_COMMENT_DEFAULT_MESSAGE } from '#/create-test-coverage-comment/create-test-coverage-comment.constants';
+import { COVERAGE_COMMENT_DEFAULT_MESSAGE } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
 import ActionsToolkit from '#/utils/actions-toolkit/actions-toolkit';
 
 async function getExistingTestCoverageComment(toolkit: ActionsToolkit) {

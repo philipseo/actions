@@ -2,14 +2,6 @@
 
 ---
 
-### Index
-
-1. [소개](#소개)
-2. [actions](#actions)
-3. [workflows](#workflows)
-
----
-
 ### 소개
 
 - 재사용 가능한 github action과 workflow를 모아둔 곳 입니다.

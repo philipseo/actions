@@ -1,15 +1,17 @@
-import combineCoverage from '#/create-test-coverage-comment/utils/combine-coverage/combine-coverage';
-import generateComment from '#/create-test-coverage-comment/utils/generate-comment/generate-comment';
-import getExistingTestCoverageComment from '#/create-test-coverage-comment/utils/get-existing-test-coverage-comment/get-existing-test-coverage-comment';
-import ActionsToolkit from '#/utils/actions-toolkit/actions-toolkit';
+import {
+  combineCoverage,
+  generateComment,
+  getExistingTestCoverageComment,
+} from '#/upsert-test-coverage-comment/utils';
+import { ActionsToolkit } from '#/utils';
 
-async function createTestCoverageComment() {
+async function upsertTestCoverageComment() {
   const toolkit = new ActionsToolkit();
 
   try {
     await combineCoverage();
     const comment = await generateComment();
-    const commentContext = {
+    const commonContext = {
       ...toolkit.context.repository,
       body: comment,
     };
@@ -17,12 +19,12 @@ async function createTestCoverageComment() {
 
     if (existingComment) {
       await toolkit.github.rest.issues.updateComment({
-        ...commentContext,
+        ...commonContext,
         comment_id: existingComment.id,
       });
     } else {
       await toolkit.github.rest.issues.createComment({
-        ...commentContext,
+        ...commonContext,
         issue_number: toolkit.context.pullRequest.number,
       });
     }
@@ -33,4 +35,4 @@ async function createTestCoverageComment() {
   }
 }
 
-export default createTestCoverageComment;
+export default upsertTestCoverageComment;

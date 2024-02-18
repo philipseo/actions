@@ -2,6 +2,8 @@
 
 GitHub Actions outpus 객체를 사용하기 위한 함수
 
+---
+
 ## Usage
 
 ```typescript
