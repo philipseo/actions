@@ -49,7 +49,7 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
 
   new-version-comment:
-    if: ${{ github.base_Ref === 'main' }}
+    if: ${{ github.base_ref == 'main' }}
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
