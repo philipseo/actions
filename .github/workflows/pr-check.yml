@@ -41,7 +41,7 @@ jobs:
 
       - name: Run Test
         shell: bash
-        run: pnpm test:coverage
+        run: ./actions/changed-since-test-coverage
 
       - name: Upsert Test Coverage Comment
         uses: ./actions/upsert-test-coverage-comment

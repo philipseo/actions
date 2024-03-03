@@ -1,0 +1,9 @@
+name: 'Changed Since Test Coverage'
+description: 'Check if the code has changed since the last test coverage run'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Changed Since Test Coverage
+      shell: bash
+      run: pnpm test:coverage --changedSince=${{ github.base_ref }}
