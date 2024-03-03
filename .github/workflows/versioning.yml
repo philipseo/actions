@@ -40,6 +40,22 @@ jobs:
           git commit -m 'Release ${{ steps.versioning.outputs.new-version }}'
           git push origin main --force
 
-#      - name: Create Github Release
-#        uses: ./actions/create-github-release
-#        run: npx -p @philipseo/scripts create-github-release ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }}
+      #      - name: Create Github Release
+      #        uses: ./actions/create-github-release
+      #        run: npx -p @philipseo/scripts create-github-release ${{ secrets.github-token }} ${{ env.repository-owner }} ${{ env.repository-name }}
+
+      - name: Success Slack notify
+        if: ${{ success() }}
+        uses: ./actions/slack-notify
+        with:
+          title: 'Release ${{ steps.versioning.outputs.new-version }}'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+
+      - name: Failed Slack notify
+        if: ${{ failure() }}
+        uses: ./actions/slack-notify
+        with:
+          title: 'Failed Versioning'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}

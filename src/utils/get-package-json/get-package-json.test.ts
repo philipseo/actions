@@ -1,4 +1,4 @@
-import * as fs from 'node:fs/promises';
+import fs from 'node:fs/promises';
 
 import { MOCK_ERROR_MESSAGE } from '#/constants';
 import { getPackageJson, getRootPath } from '#/utils';
