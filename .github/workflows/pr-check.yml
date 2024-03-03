@@ -42,8 +42,9 @@ jobs:
       - name: Install PNPM Dependencies
         uses: ./actions/install-pnpm
 
-      - name: Run Test
-        uses: ./actions/changed-since-test-coverage
+      - name: Run Test Coverage
+        shell: bash
+        run: pnpm test:coverage
 
       - name: Upsert Test Coverage Comment
         uses: ./actions/upsert-test-coverage-comment
