@@ -1,35 +1,28 @@
-import { MOCK_ERROR_MESSAGE } from '#/constants';
+import {
+  MOCK_ERROR_MESSAGE,
+  MOCK_TOOLKIT_CONTEXT,
+  MOCK_TOOLKIT_GITHUB,
+} from '#/constants';
 import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
 import upsertTestCoverageComment from '#/upsert-test-coverage-comment/upsert-test-coverage-comment';
 import * as upsertTestCoverageCommentUtils from '#/upsert-test-coverage-comment/utils';
-import * as utils from '#/utils';
+import * as upsertPullRequestCommentUtils from '#/utils/upsert-pull-request-comment/utils';
 
-const mockActionsToolkit = {
-  context: {
-    repository: {
-      owner: 'mockOwner',
-      repo: 'mockRepo',
-    },
-    pullRequest: {
-      number: 123,
-    },
-  },
-  github: {
-    rest: {
-      issues: {
-        updateComment: jest.fn(),
-        createComment: jest.fn(),
-      },
-    },
-  },
+const MOCK_TOOLKIT = {
+  context: MOCK_TOOLKIT_CONTEXT,
+  github: MOCK_TOOLKIT_GITHUB,
   success: MOCK_TOOLKIT_SUCCESS,
   failure: MOCK_TOOLKIT_FAILURE,
 };
 
+jest.mock('#/utils/actions-toolkit', () => ({
+  ActionsToolkit: jest.fn().mockImplementation(() => {
+    return MOCK_TOOLKIT;
+  }),
+}));
 jest.mock('#/upsert-test-coverage-comment/utils', () => ({
   combineCoverage: jest.fn(),
   generateComment: jest.fn().mockImplementation(() => 'mockedComment'),
-  getExistingTestCoverageComment: jest.fn(),
 }));
 
 describe('upsertTestCoverageComment', () => {
@@ -42,14 +35,8 @@ describe('upsertTestCoverageComment', () => {
       id: 456,
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
-      return mockActionsToolkit;
-    });
-
     jest
-      .spyOn(upsertTestCoverageCommentUtils, 'getExistingTestCoverageComment')
+      .spyOn(upsertPullRequestCommentUtils, 'getExistingPullRequestComment')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .mockResolvedValueOnce(mockExistingComment);
@@ -59,51 +46,35 @@ describe('upsertTestCoverageComment', () => {
     expect(upsertTestCoverageCommentUtils.combineCoverage).toHaveBeenCalled();
     expect(upsertTestCoverageCommentUtils.generateComment).toHaveBeenCalled();
     expect(
-      upsertTestCoverageCommentUtils.getExistingTestCoverageComment,
+      upsertPullRequestCommentUtils.getExistingPullRequestComment,
     ).toHaveBeenCalled();
-    expect(
-      mockActionsToolkit.github.rest.issues.updateComment,
-    ).toHaveBeenCalledWith({
-      owner: mockActionsToolkit.context.repository.owner,
-      repo: mockActionsToolkit.context.repository.repo,
-      body: 'mockedComment',
+    expect(MOCK_TOOLKIT.github.issues.updateComment).toHaveBeenCalledWith({
+      ...MOCK_TOOLKIT.context.repository,
       comment_id: mockExistingComment.id,
+      body: 'mockedComment',
     });
     expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
   test('✅ should successfully upsert test coverage comment when existing comment is not found', async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
-      return mockActionsToolkit;
-    });
     jest
-      .spyOn(upsertTestCoverageCommentUtils, 'getExistingTestCoverageComment')
+      .spyOn(upsertPullRequestCommentUtils, 'getExistingPullRequestComment')
       .mockResolvedValue(undefined);
 
     await upsertTestCoverageComment();
 
-    expect(
-      mockActionsToolkit.github.rest.issues.createComment,
-    ).toHaveBeenCalledWith({
-      owner: mockActionsToolkit.context.repository.owner,
-      repo: mockActionsToolkit.context.repository.repo,
-      issue_number: mockActionsToolkit.context.pullRequest.number,
+    expect(MOCK_TOOLKIT.github.issues.createComment).toHaveBeenCalledWith({
+      ...MOCK_TOOLKIT.context.repository,
       body: 'mockedComment',
+      issue_number: MOCK_TOOLKIT.context.pullRequest.number,
     });
   });
 
   test('❗ should handle failure', async () => {
     const mockError = new Error(MOCK_ERROR_MESSAGE);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
-      return mockActionsToolkit;
-    });
     jest
-      .spyOn(upsertTestCoverageCommentUtils, 'getExistingTestCoverageComment')
+      .spyOn(upsertPullRequestCommentUtils, 'getExistingPullRequestComment')
       .mockRejectedValue(mockError);
 
     await upsertTestCoverageComment();

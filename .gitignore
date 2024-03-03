@@ -11,8 +11,5 @@ node_modules/
 ### Testing ###
 coverage/
 
-### Outputs ###
-dist/
-
 ### Etc ###
 *.log

@@ -1,0 +1,14 @@
+name: 'Update Version and Changelog'
+description: 'Update the version of the package.json file And Upsert CHANGELOG.md'
+
+inputs:
+  github-token:
+    description: 'The GitHub token'
+    required: true
+outputs:
+  new-version:
+    description: 'The new version'
+
+runs:
+  using: 'node20'
+  main: '../../dist/update-version-and-changelog/index.js'

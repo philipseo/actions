@@ -17,9 +17,9 @@ async function slackNotify() {
       : [];
 
     const {
-      payload: { repository, pull_request },
+      payload: { repository, pullRequest },
     } = toolkit.context;
-    const branchName = pull_request?.head?.ref;
+    const branchName = pullRequest?.head?.ref;
     const owner = repository?.owner;
     const repositoryUrl = repository?.html_url;
 

@@ -1,6 +1,5 @@
 import { readFile } from 'node:fs/promises';
 
-import { getRootPath } from '@philipseo/scripts';
 import {
   createCoverageMap,
   createCoverageSummary,
@@ -10,7 +9,7 @@ import { create } from 'istanbul-reports';
 
 import { DEFAULT_IGNORE_PATTERNS } from '#/constants/ignore-pattern';
 import { COVERAGE_TXT_FILE_NAME } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
-import { getAllFilePaths } from '#/utils';
+import { getAllFilePaths, getRootPath } from '#/utils';
 
 async function combineCoverage() {
   const coveragePaths = await getAllFilePaths({
@@ -20,7 +19,7 @@ async function combineCoverage() {
   const coverageMap = createCoverageMap();
   const coverageSummary = createCoverageSummary();
 
-  for (const path of coveragePaths) {
+  for await (const path of coveragePaths) {
     const coverageFile = await readFile(path, 'utf8');
     const currentCoverageMap = createCoverageMap(JSON.parse(coverageFile));
     coverageMap.merge(currentCoverageMap);

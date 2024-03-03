@@ -1,4 +1,8 @@
-import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
+import {
+  MOCK_TOOLKIT_CONTEXT,
+  MOCK_TOOLKIT_FAILURE,
+  MOCK_TOOLKIT_SUCCESS,
+} from '#/constants/mock';
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
 import * as utils from '#/utils';
@@ -8,23 +12,8 @@ const mockInputs = {
   [GET_INPUT_KEY.BOT_TOKEN]: 'mockBotToken',
   [GET_INPUT_KEY.TITLE]: 'mockTitle',
 };
-const mockActionsToolkit = {
-  context: {
-    payload: {
-      repository: {
-        owner: {
-          login: 'mockOwner',
-        },
-        name: 'mockRepo-name',
-        html_url: 'https://github.com/owner/repo',
-      },
-      pull_request: {
-        head: {
-          ref: 'mockBranchName',
-        },
-      },
-    },
-  },
+const MOCK_TOOLKIT = {
+  context: MOCK_TOOLKIT_CONTEXT,
   success: MOCK_TOOLKIT_SUCCESS,
 };
 
@@ -52,7 +41,7 @@ describe('slackNotify', () => {
     // @ts-ignore
     jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
       return {
-        ...mockActionsToolkit,
+        ...MOCK_TOOLKIT,
         inputs: mockInputs,
       };
     });
@@ -68,7 +57,7 @@ describe('slackNotify', () => {
     // @ts-ignore
     jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
       return {
-        ...mockActionsToolkit,
+        ...MOCK_TOOLKIT,
         inputs: {
           ...mockInputs,
           [GET_INPUT_KEY.EXTENDS_SECTION_FIELDS]: JSON.stringify([
