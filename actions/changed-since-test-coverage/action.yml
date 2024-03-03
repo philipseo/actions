@@ -6,4 +6,4 @@ runs:
   steps:
     - name: Run Changed Since Test Coverage
       shell: bash
-      run: pnpm test:coverage --changedSince=${{ github.base_ref }}
+      run: pnpm test:coverage --changedSince=origin/${{ github.base_ref }}
