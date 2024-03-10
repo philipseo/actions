@@ -2,9 +2,8 @@ import { existsSync } from 'node:fs';
 import { readdir, stat } from 'node:fs/promises';
 import * as path from 'node:path';
 
-import { isIgnoredPattern } from '@philipseo/scripts';
-
 import { FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE } from '#/utils/get-all-file-paths/get-all-file-paths.constants';
+import { isIgnoredPattern } from '#/utils/get-all-file-paths/utils';
 import { getRootPath } from '#/utils/get-root-path';
 
 /**

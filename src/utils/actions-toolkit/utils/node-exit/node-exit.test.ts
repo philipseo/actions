@@ -1,4 +1,4 @@
-import { NODE_EXIT_CODE, NodeExit } from '#/utils';
+import { NODE_EXIT_CODE, NodeExit } from '#/utils/actions-toolkit/utils';
 
 describe('NodeExit', () => {
   let nodeExit: NodeExit;

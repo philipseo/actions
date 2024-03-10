@@ -1,4 +1,4 @@
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants/ignore-pattern';
+import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import {
   updateVersion,
   upsertChangeLog,

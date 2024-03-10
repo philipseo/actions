@@ -1,21 +1,20 @@
 import {
   DEFAULT_IGNORE_PATTERNS,
+  MOCK_PACKAGE_JSON,
   MOCK_PACKAGE_JSON_PATH,
   MOCK_TOOLKIT_CONTEXT,
   MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_SUCCESS,
-  MOCK_VERSION,
 } from '#/constants';
-import updateVersionAndChangelog from '#/update-version-and-changelog/update-version-and-changelog';
-import * as updateVersionAndChangelogUtils from '#/update-version-and-changelog/utils';
+import createGithubReleaseAndTag from '#/create-github-release-and-tag/create-github-release-and-tag';
 import * as utils from '#/utils';
 
-describe('updateVersionAndChangelog', () => {
+describe('createGithubReleaseAndTag', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('✅ should update version and changelog for each package', async () => {
+  test('✅ should create GitHub release for each changeLogPaths', async () => {
     const releaseMessage = 'Release message';
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -23,13 +22,14 @@ describe('updateVersionAndChangelog', () => {
     jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
       return {
         context: MOCK_TOOLKIT_CONTEXT,
-        outputs: {
-          'new-version': MOCK_VERSION,
+        github: {
+          repos: {
+            createRelease: jest.fn().mockResolvedValue({}),
+          },
         },
         success: MOCK_TOOLKIT_SUCCESS,
       };
     });
-    jest.spyOn(utils, 'getNewVersion').mockResolvedValueOnce(MOCK_VERSION);
     jest
       .spyOn(utils, 'getAllFilePaths')
       .mockResolvedValueOnce([MOCK_PACKAGE_JSON_PATH]);
@@ -39,30 +39,25 @@ describe('updateVersionAndChangelog', () => {
         MOCK_PACKAGE_JSON_PATH.replace('/package.json', ''),
       ]);
     jest
+      .spyOn(utils, 'getPackageJson')
+      .mockResolvedValueOnce(MOCK_PACKAGE_JSON);
+    jest
       .spyOn(utils, 'generateReleaseMessage')
       .mockReturnValueOnce(releaseMessage);
-    jest
-      .spyOn(updateVersionAndChangelogUtils, 'updateVersion')
-      .mockResolvedValue();
-    jest
-      .spyOn(updateVersionAndChangelogUtils, 'upsertChangeLog')
-      .mockResolvedValue();
 
-    await updateVersionAndChangelog();
+    await createGithubReleaseAndTag();
 
-    expect(utils.getNewVersion).toHaveBeenCalledWith({
-      prTitle: MOCK_TOOLKIT_CONTEXT.pullRequest.title,
-    });
     expect(utils.getAllFilePaths).toHaveBeenCalledWith({
-      filename: 'package.json',
+      filename: 'CHANGELOG.md',
       ignorePatterns: DEFAULT_IGNORE_PATTERNS,
     });
     expect(utils.getChangedPackagePaths).toHaveBeenCalledTimes(1);
     expect(utils.generateReleaseMessage).toHaveBeenCalledTimes(1);
+    expect(utils.getPackageJson).toHaveBeenCalledTimes(1);
     expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
-  test('❗ should handle failure correctly', async () => {
+  test('❗ should handle error and call toolkit.failure', async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
@@ -71,7 +66,7 @@ describe('updateVersionAndChangelog', () => {
       };
     });
 
-    await updateVersionAndChangelog();
+    await createGithubReleaseAndTag();
 
     expect(MOCK_TOOLKIT_FAILURE).toHaveBeenCalled();
   });

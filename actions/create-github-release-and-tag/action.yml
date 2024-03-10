@@ -1,0 +1,11 @@
+name: 'Create GihHub Release And Tag'
+description: 'Create GihHub Release And Tag'
+
+inputs:
+  github-token:
+    description: 'The GitHub token'
+    required: true
+
+runs:
+  using: 'node20'
+  main: '../../dist/create-github-release-and-tag/index.js'

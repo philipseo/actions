@@ -1,7 +1,3 @@
-const prettierConfig = require('@philipseo/configs/lint-staged/prettier');
+const baseConfig = require('@philipseo/configs/lint-staged/base');
 
-/* TODO: js-kit lint-staged, eslint flat option 변경 필요 */
-module.exports = {
-  '*.{js,jsx,ts,tsx}': 'eslint --ignore-path .eslintignore',
-  ...prettierConfig,
-};
+module.exports = baseConfig;

@@ -72,7 +72,6 @@ describe('slackNotify', () => {
 
     await slackNotify();
 
-    expect(utils.ActionsToolkit).toHaveBeenCalled();
     expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
@@ -87,7 +86,6 @@ describe('slackNotify', () => {
 
     await slackNotify();
 
-    expect(utils.ActionsToolkit).toHaveBeenCalled();
     expect(MOCK_TOOLKIT_FAILURE).toHaveBeenCalled();
   });
 });

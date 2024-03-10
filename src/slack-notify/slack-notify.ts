@@ -48,6 +48,10 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Author*: ${owner?.login}`,
           },
+          // {
+          //   type: 'mrkdwn',
+          //   text: `*Action*: <${repositoryUrl}/actions/runs/${{ github.run_id }}|${{ github.run_id }}>`,
+          // },
           ...extendsSectionFields,
         ],
       },

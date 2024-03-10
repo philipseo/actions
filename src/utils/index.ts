@@ -6,5 +6,4 @@ export * from '#/utils/get-error-message';
 export * from '#/utils/get-new-version';
 export * from '#/utils/get-package-json';
 export * from '#/utils/get-root-path';
-export * from '#/utils/node-exit';
 export * from '#/utils/upsert-pull-request-comment';

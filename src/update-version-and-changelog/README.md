@@ -17,3 +17,12 @@ Version은 [SemVer](https://semver.org/lang/ko) 를 따르며, 아래 내용을 
 | refac           | Patch   | refac: title   |
 | test            | Patch   | test: title    |
 | 그 외           | Patch   | title          |
+
+## Usage
+
+```yaml
+- name: Update Version and Changelog
+  uses: philipseo/actions/actions/update-version-and-changelog@main
+  with:
+    github-token: ${{ secrets.GH_TOKEN }}
+```
