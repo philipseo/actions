@@ -2,7 +2,8 @@ name: Versioning
 
 on:
   pull_request:
-    types: [closed]
+    #    types: [closed]
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
   workflow_dispatch:
@@ -38,13 +39,13 @@ jobs:
         shell: bash
         run: pnpm prettier:fix
 
-      - name: Version Update Commit And Push
-        run: |
-          git config user.name "${{ env.username }}"
-          git config user.email "${{ env.username }}@users.noreply.github.com"
-          git add .
-          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
-          git push origin main --force
+  #      - name: Version Update Commit And Push
+  #        run: |
+  #          git config user.name "${{ env.username }}"
+  #          git config user.email "${{ env.username }}@users.noreply.github.com"
+  #          git add .
+  #          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
+  #          git push origin main --force
 
   create-github-release-and-tag:
     needs: [update-version-and-upsert-changelog]
@@ -53,8 +54,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create Github Release And Tag
-        uses: ./actions/create-github-release-and-tag
+  #      - name: Create Github Release And Tag
+  #        uses: ./actions/create-github-release-and-tag
   #        uses: philipseo/actions/actions/create-github-release-and-tag@main
 
   success-slack-notify:
@@ -70,7 +71,7 @@ jobs:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
 
   failed-slack-notify:
-    if: ${{ success() }}
+    if: ${{ failure() }}
     runs-on: ubuntu-latest
     needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
     steps:
