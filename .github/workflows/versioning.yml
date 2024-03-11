@@ -41,13 +41,13 @@ jobs:
         shell: bash
         run: pnpm prettier:fix
 
-  #      - name: Version Update Commit And Push
-  #        run: |
-  #          git config user.name "${{ env.username }}"
-  #          git config user.email "${{ env.username }}@users.noreply.github.com"
-  #          git add .
-  #          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
-  #          git push origin main --force
+      - name: Version Update Commit And Push
+        run: |
+          git config user.name "${{ env.username }}"
+          git config user.email "${{ env.username }}@users.noreply.github.com"
+          git add .
+          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
+          git push origin main --force
 
   create-github-release-and-tag:
     needs: [update-version-and-upsert-changelog]
@@ -56,9 +56,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-  #      - name: Create Github Release And Tag
-  #        uses: ./actions/create-github-release-and-tag
-  #        uses: philipseo/actions/actions/create-github-release-and-tag@main
+      - name: Create Github Release And Tag
+        uses: ./actions/create-github-release-and-tag
+        #        uses: philipseo/actions/actions/create-github-release-and-tag@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
 
   success-slack-notify:
     if: ${{ success() }}
