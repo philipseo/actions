@@ -69,6 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, test, new-version-comment]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Slack notify
         uses: ./actions/slack-notify
         with:
