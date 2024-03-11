@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: philipseo/actions/actions/install-node@main
+        uses: ./actions/install-node
 
       - name: Install PNPM Dependencies
-        uses: philipseo/actions/actions/install-pnpm@main
+        uses: ./actions/install-pnpm
 
       - name: Run lint
         shell: bash
@@ -37,10 +37,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Install Node.js
-        uses: philipseo/actions/actions/install-node@main
+        uses: ./actions/install-node
 
       - name: Install PNPM Dependencies
-        uses: philipseo/actions/actions/install-pnpm@main
+        uses: ./actions/install-pnpm
 
       - name: Run Test Coverage
         shell: bash
@@ -48,7 +48,6 @@ jobs:
 
       - name: Upsert Test Coverage Comment
         uses: ./actions/upsert-test-coverage-comment
-        #        uses: philipseo/actions/actions/upsert-test-coverage-comment@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
@@ -62,7 +61,6 @@ jobs:
 
       - name: Upsert Test Coverage Comment
         uses: ./actions/upsert-new-version-comment
-        #        uses: philipseo/actions/actions/upsert-new-version-comment@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
@@ -72,8 +70,8 @@ jobs:
     needs: [lint, test, new-version-comment]
     steps:
       - name: Slack notify
-        uses: philipseo/actions/actions/slack-notify@main
+        uses: ./actions/slack-notify
         with:
-          title: 'Failed PR Check'
+          title: '❗Failed philipseo/actions PR Checks'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}

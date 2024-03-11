@@ -25,10 +25,10 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Install Node.js
-        uses: philipseo/actions/actions/install-node@main
+        uses: ./actions/install-node@main
 
       - name: Install PNPM Dependencies
-        uses: philipseo/actions/actions/install-pnpm@main
+        uses: ./actions/install-pnpm@main
 
       - name: Run Build
         shell: bash
@@ -37,7 +37,6 @@ jobs:
       - name: Update Version And Upsert CHANGELOG.md
         id: update-version-and-upsert-changelog
         uses: ./actions/update-version-and-changelog
-        #        uses: philipseo/actions/actions/update-version-and-changelog@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
@@ -62,7 +61,6 @@ jobs:
 
       - name: Create Github Release And Tag
         uses: ./actions/create-github-release-and-tag
-        #        uses: philipseo/actions/actions/create-github-release-and-tag@main
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
@@ -72,9 +70,9 @@ jobs:
     needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
     steps:
       - name: Success Slack notify
-        uses: philipseo/actions/actions/slack-notify@main
+        uses: ./actions/slack-notify
         with:
-          title: '✅ Release ${{ steps.versioning.outputs.new-version }}'
+          title: '✅ Success philipseo/actions Versioning'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
 
@@ -84,8 +82,8 @@ jobs:
     needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
     steps:
       - name: Failed Slack notify
-        uses: philipseo/actions/actions/slack-notify@main
+        uses: ./actions/slack-notify
         with:
-          title: '❗Failed Versioning'
+          title: '❗Failed philipseo/actions Versioning'
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
