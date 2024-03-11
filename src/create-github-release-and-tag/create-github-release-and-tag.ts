@@ -11,16 +11,17 @@ async function createGithubReleaseAndTag() {
   const toolkit = new ActionsToolkit();
 
   try {
-    const changeLogPaths = await getAllFilePaths({
-      filename: 'CHANGELOG.md',
+    const packageJsonPaths = await getAllFilePaths({
+      filename: 'package.json',
       ignorePatterns: DEFAULT_IGNORE_PATTERNS,
     });
     const changedPackagePaths = await getChangedPackagePaths({ toolkit });
 
-    for await (const path of changeLogPaths) {
-      const packagePath = path.replace('/CHANGELOG.md', '');
+    console.log('aaa', packageJsonPaths, changedPackagePaths);
+    for await (const path of packageJsonPaths) {
+      const packagePath = path.replace('/package.json', '');
       const packageJson = await getPackageJson({
-        path: `${packagePath}/package.json`,
+        path,
       });
       const version = `v${packageJson.version}`;
       const isChangedPackage = changedPackagePaths.includes(packagePath);
@@ -28,6 +29,14 @@ async function createGithubReleaseAndTag() {
         context: toolkit.context,
         isBumpVersion: !isChangedPackage,
       });
+      console.log(
+        'bbb',
+        packagePath,
+        packageJson,
+        version,
+        isChangedPackage,
+        releaseMessage,
+      );
 
       await toolkit.github.repos.createRelease({
         ...toolkit.context.repository,
