@@ -12,6 +12,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  USERNAME: ${{ github.actor }}
+
 jobs:
   update-version-and-upsert-changelog:
     #    if: github.event.pull_request.merged == true
