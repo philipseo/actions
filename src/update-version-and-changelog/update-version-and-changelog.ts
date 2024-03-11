@@ -1,4 +1,4 @@
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
+// import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 // import {
 //   updateVersion,
 //   upsertChangeLog,
@@ -6,8 +6,8 @@ import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import {
   ActionsToolkit,
   //   generateReleaseMessage,
-  getAllFilePaths,
-  //   getChangedPackagePaths,
+  // getAllFilePaths,
+  getChangedPackagePaths,
   getNewVersion,
 } from '#/utils';
 
@@ -55,12 +55,13 @@ async function updateVersionAndChangelog() {
     const newVersion = await getNewVersion({
       prTitle: toolkit.context.pullRequest.title,
     });
-    const packageJsonPaths = await getAllFilePaths({
-      filename: 'package.json',
-      ignorePatterns: DEFAULT_IGNORE_PATTERNS,
-    });
-    console.log('aaa', packageJsonPaths);
-    // const changedPackagePaths = await getChangedPackagePaths({ toolkit });
+    // const packageJsonPaths = await getAllFilePaths({
+    //   filename: 'package.json',
+    //   ignorePatterns: DEFAULT_IGNORE_PATTERNS,
+    // });
+    // console.log('aaa', packageJsonPaths);
+    const changedPackagePaths = await getChangedPackagePaths({ toolkit });
+    console.log('aaa', changedPackagePaths);
     //
     // for await (const path of packageJsonPaths) {
     //   const packagePath = path.replace('/package.json', '');
