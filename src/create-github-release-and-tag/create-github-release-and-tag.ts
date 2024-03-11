@@ -4,24 +4,25 @@ import {
   generateReleaseMessage,
   getAllFilePaths,
   getChangedPackagePaths,
-  getNewVersion,
+  getPackageJson,
 } from '#/utils';
 
 async function createGithubReleaseAndTag() {
   const toolkit = new ActionsToolkit();
 
   try {
-    const newVersion = await getNewVersion({
-      prTitle: toolkit.context.pullRequest.title,
-    });
-    const packageJsonPaths = await getAllFilePaths({
-      filename: 'package.json',
+    const changeLogPaths = await getAllFilePaths({
+      filename: 'CHANGELOG.md',
       ignorePatterns: DEFAULT_IGNORE_PATTERNS,
     });
     const changedPackagePaths = await getChangedPackagePaths({ toolkit });
 
-    for await (const path of packageJsonPaths) {
-      const packagePath = path.replace('/package.json', '');
+    for await (const path of changeLogPaths) {
+      const packagePath = path.replace('/CHANGELOG.md', '');
+      const packageJson = await getPackageJson({
+        path: `${packagePath}/package.json`,
+      });
+      const version = `v${packageJson.version}`;
       const isChangedPackage = changedPackagePaths.includes(packagePath);
       const releaseMessage = generateReleaseMessage({
         context: toolkit.context,
@@ -30,8 +31,8 @@ async function createGithubReleaseAndTag() {
 
       await toolkit.github.repos.createRelease({
         ...toolkit.context.repository,
-        tag_name: newVersion,
-        name: newVersion,
+        tag_name: version,
+        name: version,
         body: releaseMessage,
       });
     }
