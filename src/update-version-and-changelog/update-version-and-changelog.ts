@@ -43,6 +43,7 @@ async function updateVersionAndChangelog() {
     toolkit.outputs['new-version'] = newVersion;
     toolkit.success();
   } catch (error) {
+    console.error('updateVersionAndChangelog error:', error);
     toolkit.failure(error);
   }
 }
