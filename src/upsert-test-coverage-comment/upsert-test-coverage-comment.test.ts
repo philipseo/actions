@@ -1,9 +1,10 @@
 import {
   MOCK_ERROR_MESSAGE,
   MOCK_TOOLKIT_CONTEXT,
+  MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_GITHUB,
-} from '#/constants';
-import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
+  MOCK_TOOLKIT_SUCCESS,
+} from '#/__mocks__/constants';
 import upsertTestCoverageComment from '#/upsert-test-coverage-comment/upsert-test-coverage-comment';
 import * as upsertTestCoverageCommentUtils from '#/upsert-test-coverage-comment/utils';
 import * as upsertPullRequestCommentUtils from '#/utils/upsert-pull-request-comment/utils';

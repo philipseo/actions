@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 
-import { MOCK_ROOT_PATH } from '#/constants';
+import { MOCK_ROOT_PATH } from '#/__mocks__';
 import {
   COVERAGE_TXT_FILE_NAME,
   DEFAULT_COVERAGE_COMMENT_MESSAGE,

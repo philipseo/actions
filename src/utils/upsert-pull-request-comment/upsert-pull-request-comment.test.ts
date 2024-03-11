@@ -1,4 +1,4 @@
-import { MOCK_TOOLKIT_CONTEXT, MOCK_TOOLKIT_GITHUB } from '#/constants';
+import { MOCK_TOOLKIT_CONTEXT, MOCK_TOOLKIT_GITHUB } from '#/__mocks__';
 import { upsertPullRequestComment } from '#/utils';
 import * as upsertPullRequestCommentUtils from '#/utils/upsert-pull-request-comment/utils';
 

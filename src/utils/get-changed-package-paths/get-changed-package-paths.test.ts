@@ -1,4 +1,4 @@
-import { MOCK_ROOT_PATH, MOCK_TOOLKIT_CONTEXT } from '#/constants';
+import { MOCK_ROOT_PATH, MOCK_TOOLKIT_CONTEXT } from '#/__mocks__';
 import { getChangedPackagePaths } from '#/utils';
 
 const MOCK_TOOLKIT = {

@@ -1,4 +1,4 @@
-import { MOCK_ERROR_MESSAGE } from '#/constants';
+import { MOCK_ERROR_MESSAGE } from '#/__mocks__';
 import { getErrorMessage } from '#/utils';
 import { DEFAULT_ERROR_MESSAGE } from '#/utils/get-error-message/get-error-message.constants';
 

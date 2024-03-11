@@ -1,10 +1,11 @@
 import {
   MOCK_ERROR_MESSAGE,
   MOCK_TOOLKIT_CONTEXT,
+  MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_GITHUB,
+  MOCK_TOOLKIT_SUCCESS,
   MOCK_VERSION,
-} from '#/constants';
-import { MOCK_TOOLKIT_FAILURE, MOCK_TOOLKIT_SUCCESS } from '#/constants/mock';
+} from '#/__mocks__';
 import upsertNewVersionComment from '#/upsert-new-version-comment/upsert-new-version-comment';
 import { DEFAULT_NEW_VERSION_MESSAGE } from '#/upsert-new-version-comment/upsert-new-version-comment.test.constants';
 import * as upsertPullRequestCommentUtils from '#/utils/upsert-pull-request-comment/utils';

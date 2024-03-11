@@ -1,11 +1,11 @@
 import {
-  DEFAULT_IGNORE_PATTERNS,
   MOCK_PACKAGE_JSON,
   MOCK_PACKAGE_JSON_PATH,
   MOCK_TOOLKIT_CONTEXT,
   MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_SUCCESS,
-} from '#/constants';
+} from '#/__mocks__';
+import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import createGithubReleaseAndTag from '#/create-github-release-and-tag/create-github-release-and-tag';
 import * as utils from '#/utils';
 

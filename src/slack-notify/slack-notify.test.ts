@@ -2,7 +2,7 @@ import {
   MOCK_TOOLKIT_CONTEXT,
   MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_SUCCESS,
-} from '#/constants/mock';
+} from '#/__mocks__';
 import slackNotify from '#/slack-notify/slack-notify';
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
 import * as utils from '#/utils';
