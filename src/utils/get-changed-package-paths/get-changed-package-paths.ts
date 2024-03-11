@@ -51,8 +51,8 @@ async function getChangedPackagePaths({ toolkit }: GetChangedPackagePaths) {
     }: GetChangedFilesResponse = await toolkit.github.graphql(`
         {
           repository(owner: "${owner}", name: "${repo}") {
-            pullRequest(number:${number}, after: "${endCursor}") {
-              files (first: ${perPage}){
+            pullRequest(number: "${number}") {
+              files (first: ${perPage}, after: "${endCursor}"){
                 totalCount
                 pageInfo {
                   endCursor
