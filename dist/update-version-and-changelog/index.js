@@ -28871,58 +28871,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__nccwpck_require__(331), exports);
-__exportStar(__nccwpck_require__(4250), exports);
-
-
-/***/ }),
-
-/***/ 4250:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MOCK_TOOLKIT_FAILURE = exports.MOCK_TOOLKIT_SUCCESS = exports.MOCK_TOOLKIT_GITHUB = exports.MOCK_TOOLKIT_CONTEXT = exports.MOCK_PACKAGE_JSON = exports.MOCK_PACKAGE_JSON_PATH = exports.MOCK_VERSION = exports.MOCK_GITHUB_TOKEN = exports.MOCK_ROOT_PATH = exports.MOCK_ERROR_MESSAGE = void 0;
-exports.MOCK_ERROR_MESSAGE = 'Mock Error Message';
-exports.MOCK_ROOT_PATH = '/root/mock';
-exports.MOCK_GITHUB_TOKEN = 'mockGithubToken';
-exports.MOCK_VERSION = '1.2.3';
-exports.MOCK_PACKAGE_JSON_PATH = '/mock/package.json';
-exports.MOCK_PACKAGE_JSON = {
-    name: 'mockName',
-    version: exports.MOCK_VERSION,
-};
-exports.MOCK_TOOLKIT_CONTEXT = {
-    payload: {
-        repository: {
-            owner: {
-                login: 'mockOwner',
-            },
-            name: 'mockRepo-name',
-            html_url: 'https://github.com/owner/repo',
-        },
-    },
-    repository: {
-        owner: 'mockOwner',
-        repo: 'mockRepo',
-    },
-    pullRequest: {
-        number: 123,
-        title: 'feat: mockTitle',
-        head: {
-            ref: 'mockBranchName',
-        },
-    },
-};
-exports.MOCK_TOOLKIT_GITHUB = {
-    issues: {
-        createComment: jest.fn(),
-        updateComment: jest.fn(),
-        listComments: jest.fn(),
-    },
-};
-exports.MOCK_TOOLKIT_SUCCESS = jest.fn();
-exports.MOCK_TOOLKIT_FAILURE = jest.fn();
 
 
 /***/ }),
@@ -29003,7 +28951,8 @@ async function updateVersionAndChangelog() {
             ignorePatterns: constants_1.DEFAULT_IGNORE_PATTERNS,
         });
         console.log('aaa', packageJsonPaths);
-        // const changedPackagePaths = await getChangedPackagePaths({ toolkit });
+        const changedPackagePaths = await (0, utils_1.getChangedPackagePaths)({ toolkit });
+        console.log('bbb', changedPackagePaths);
         //
         // for await (const path of packageJsonPaths) {
         //   const packagePath = path.replace('/package.json', '');
@@ -29638,8 +29587,8 @@ async function getChangedPackagePaths({ toolkit }) {
         const { repository: { pullRequest }, } = await toolkit.github.graphql(`
         {
           repository(owner: "${owner}", name: "${repo}") {
-            pullRequest(number:${number}, after: "${endCursor}") {
-              files (first: ${perPage}){
+            pullRequest(number: ${number}) {
+              files (first: ${perPage}, after: "${endCursor}"){
                 totalCount
                 pageInfo {
                   endCursor

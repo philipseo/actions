@@ -1,4 +1,4 @@
-import { MOCK_ERROR_MESSAGE, MOCK_PACKAGE_JSON } from '#/constants';
+import { MOCK_ERROR_MESSAGE, MOCK_PACKAGE_JSON } from '#/__mocks__';
 import * as utils from '#/utils';
 
 jest.mock('#/utils/get-root-path', () => {

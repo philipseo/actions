@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 
-import { MOCK_ERROR_MESSAGE } from '#/constants';
+import { MOCK_ERROR_MESSAGE } from '#/__mocks__';
 import { getPackageJson, getRootPath } from '#/utils';
 
 describe('getPackageJsonPath function', () => {

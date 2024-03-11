@@ -1,4 +1,4 @@
-import { MOCK_TOOLKIT_CONTEXT } from '#/constants';
+import { MOCK_TOOLKIT_CONTEXT } from '#/__mocks__';
 import { generateReleaseMessage } from '#/utils';
 import { DEFAULT_BUMP_MESSAGE } from '#/utils/generate-release-message/generate-release-message.constants';
 

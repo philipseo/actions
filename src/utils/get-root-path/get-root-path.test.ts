@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { MOCK_ROOT_PATH } from '#/constants';
+import { MOCK_ROOT_PATH } from '#/__mocks__';
 import { getRootPath } from '#/utils';
 import {
   NOT_FOUND_ROOT_PATH,

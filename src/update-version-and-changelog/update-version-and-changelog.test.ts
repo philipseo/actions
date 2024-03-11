@@ -1,11 +1,11 @@
 import {
-  DEFAULT_IGNORE_PATTERNS,
   MOCK_PACKAGE_JSON_PATH,
   MOCK_TOOLKIT_CONTEXT,
   MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_SUCCESS,
   MOCK_VERSION,
-} from '#/constants';
+} from '#/__mocks__';
+import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import updateVersionAndChangelog from '#/update-version-and-changelog/update-version-and-changelog';
 import * as updateVersionAndChangelogUtils from '#/update-version-and-changelog/utils';
 import * as utils from '#/utils';
