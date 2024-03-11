@@ -1,11 +1,15 @@
 import { existsSync } from 'node:fs';
 import { readdir, stat } from 'node:fs/promises';
-import path from 'node:path';
-
-import { getRootPath, isIgnoredPattern } from '@philipseo/scripts';
+import * as path from 'node:path';
 
 import { FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE } from '#/utils/get-all-file-paths/get-all-file-paths.constants';
+import { isIgnoredPattern } from '#/utils/get-all-file-paths/utils';
+import { getRootPath } from '#/utils/get-root-path';
 
+/**
+ * @property {string} filename - filename
+ * @property {string[]} ignorePatterns - ignore patterns
+ */
 interface GetAllFilePathsProps {
   filename: string;
   ignorePatterns: string[];
@@ -22,7 +26,7 @@ async function getAllFilePaths({
     throw new Error(FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE);
   } else {
     // eslint-disable-next-line no-inner-declarations
-    async function recursiveGetFilePaths(currentDirectoryPath: string) {
+    const recursiveGetFilePaths = async (currentDirectoryPath: string) => {
       const currentDirectoryFilePath = path.join(
         currentDirectoryPath,
         filename,
@@ -35,7 +39,7 @@ async function getAllFilePaths({
 
       const subItems = await readdir(currentDirectoryPath);
 
-      for (const subItem of subItems) {
+      for await (const subItem of subItems) {
         const stats = await stat(path.join(currentDirectoryPath, subItem));
         const isDirectory = stats.isDirectory();
 
@@ -49,7 +53,7 @@ async function getAllFilePaths({
           await recursiveGetFilePaths(path.join(currentDirectoryPath, subItem));
         }
       }
-    }
+    };
 
     await recursiveGetFilePaths(rootPath);
 

@@ -1,0 +1,82 @@
+name: Versioning
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-version-and-upsert-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: philipseo/actions/actions/install-node@main
+
+      - name: Install PNPM Dependencies
+        uses: philipseo/actions/actions/install-pnpm@main
+
+      - name: Run Build
+        shell: bash
+        run: pnpm build
+
+      - name: Update Version And Upsert CHANGELOG.md
+        id: update-version-and-upsert-changelog
+        uses: ./actions/update-version-and-changelog
+      #        uses: philipseo/actions/actions/update-version-and-changelog@main
+
+      - name: Run prettier:fix
+        shell: bash
+        run: pnpm prettier:fix
+
+      - name: Version Update Commit And Push
+        run: |
+          git config user.name "${{ env.username }}"
+          git config user.email "${{ env.username }}@users.noreply.github.com"
+          git add .
+          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
+          git push origin main --force
+
+  create-github-release-and-tag:
+    needs: [update-version-and-upsert-changelog]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Github Release And Tag
+        uses: ./actions/create-github-release-and-tag
+  #        uses: philipseo/actions/actions/create-github-release-and-tag@main
+
+  success-slack-notify:
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
+    steps:
+      - name: Success Slack notify
+        uses: philipseo/actions/actions/slack-notify@main
+        with:
+          title: '✅ Release ${{ steps.versioning.outputs.new-version }}'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+
+  failed-slack-notify:
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
+    steps:
+      - name: Failed Slack notify
+        uses: philipseo/actions/actions/slack-notify@main
+        with:
+          title: '❗Failed Versioning'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}

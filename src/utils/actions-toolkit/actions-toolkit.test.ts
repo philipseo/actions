@@ -1,24 +1,20 @@
 import { setFailed } from '@actions/core';
 
-import { MOCK_ERROR_MESSAGE } from '#/constants';
+import { MOCK_ERROR_MESSAGE, MOCK_TOOLKIT_CONTEXT } from '#/constants';
 import { MOCK_GITHUB_TOKEN } from '#/constants/mock';
 import { ActionsToolkit } from '#/utils';
 
 jest.mock('@actions/core');
-jest.mock('#/utils/node-exit');
-jest.mock('#/utils/actions-toolkit/utils/context/context');
-jest.mock(
-  '#/utils/actions-toolkit/utils/create-input-proxy/create-input-proxy',
-  () => {
-    return jest.fn().mockReturnValue({ 'github-token': MOCK_GITHUB_TOKEN });
-  },
-);
-jest.mock(
-  '#/utils/actions-toolkit/utils/create-output-proxy/create-output-proxy',
-  () => {
-    return jest.fn().mockReturnValue({});
-  },
-);
+jest.mock('#/utils/actions-toolkit/utils', () => {
+  return {
+    ...jest.requireActual('#/utils/actions-toolkit/utils'),
+    Context: jest.fn().mockReturnValue(MOCK_TOOLKIT_CONTEXT),
+    createInputProxy: jest
+      .fn()
+      .mockReturnValue({ 'github-token': MOCK_GITHUB_TOKEN }),
+    createOutputProxy: jest.fn().mockReturnValue({}),
+  };
+});
 jest.spyOn(process, 'exit').mockImplementation();
 
 describe('ActionsToolkit', () => {
@@ -32,8 +28,8 @@ describe('ActionsToolkit', () => {
     expect(toolkit.inputs).toEqual({ 'github-token': MOCK_GITHUB_TOKEN });
     expect(toolkit.outputs).toEqual({});
     expect(toolkit.token).toBe(MOCK_GITHUB_TOKEN);
+    expect(toolkit.context).toBe(MOCK_TOOLKIT_CONTEXT);
     expect(toolkit.github).toBeInstanceOf(Object);
-    expect(toolkit.context).toBeInstanceOf(Object);
   });
 
   test('✅ should handle success', () => {

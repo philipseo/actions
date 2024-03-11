@@ -1,0 +1,14 @@
+name: Reusable PR Check
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    name: Reusable lint
+    uses: philipseo/actions/.github/workflows/reusable/lint.yml@main
+
+  test:
+    name: Reusable test
+    needs: [lint]
+    uses: philipseo/actions/.github/workflows/reusable/test.yml@main

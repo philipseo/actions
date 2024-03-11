@@ -17,9 +17,10 @@ async function slackNotify() {
       : [];
 
     const {
-      payload: { repository, pull_request },
+      payload: { repository },
+      pullRequest,
     } = toolkit.context;
-    const branchName = pull_request?.head?.ref;
+    const branchName = pullRequest?.head?.ref;
     const owner = repository?.owner;
     const repositoryUrl = repository?.html_url;
 
@@ -47,6 +48,10 @@ async function slackNotify() {
             type: 'mrkdwn',
             text: `*Author*: ${owner?.login}`,
           },
+          // {
+          //   type: 'mrkdwn',
+          //   text: `*Action*: <${repositoryUrl}/actions/runs/${{ github.run_id }}|${{ github.run_id }}>`,
+          // },
           ...extendsSectionFields,
         ],
       },

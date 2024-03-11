@@ -1,9 +1,9 @@
+import { DEFAULT_COVERAGE_COMMENT_MESSAGE } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
 import {
   combineCoverage,
   generateComment,
-  getExistingTestCoverageComment,
 } from '#/upsert-test-coverage-comment/utils';
-import { ActionsToolkit } from '#/utils';
+import { ActionsToolkit, upsertPullRequestComment } from '#/utils';
 
 async function upsertTestCoverageComment() {
   const toolkit = new ActionsToolkit();
@@ -11,23 +11,11 @@ async function upsertTestCoverageComment() {
   try {
     await combineCoverage();
     const comment = await generateComment();
-    const commonContext = {
-      ...toolkit.context.repository,
-      body: comment,
-    };
-    const existingComment = await getExistingTestCoverageComment(toolkit);
-
-    if (existingComment) {
-      await toolkit.github.rest.issues.updateComment({
-        ...commonContext,
-        comment_id: existingComment.id,
-      });
-    } else {
-      await toolkit.github.rest.issues.createComment({
-        ...commonContext,
-        issue_number: toolkit.context.pullRequest.number,
-      });
-    }
+    await upsertPullRequestComment({
+      toolkit,
+      message: DEFAULT_COVERAGE_COMMENT_MESSAGE,
+      comment,
+    });
 
     toolkit.success();
   } catch (error) {

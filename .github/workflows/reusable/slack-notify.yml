@@ -1,0 +1,45 @@
+name: Reusable slack-notify workflow
+
+on:
+  workflow_call:
+    inputs:
+      title:
+        description: 'Slack notify title'
+        required: true
+      extends-section-fields:
+        description: 'Slack notify extends section fields'
+        required: false
+    secrets:
+      channel-id:
+        description: 'Slack channel id'
+        required: true
+      bot-token:
+        description: 'Slack bot token'
+        required: true
+
+jobs:
+  slack-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: philipseo/actions
+          path: ./.github/reusable-actions
+
+      - name: Slack notify
+        uses: ./.github/reusable-actions/actions/slack-notify
+        with:
+          title: ${{ inputs.title }}
+          bot-token: ${{ secrets.bot-token }}
+          channel-id: ${{ secrets.channel-id }}
+          extends-section-fields: |
+            [
+              {
+                "type": "mrkdwn",
+                "text": "*Workflow*: <${{ github.repositoryUrl }}/actions/runs/${{ github.run_id }}|link>"
+              }
+            ]

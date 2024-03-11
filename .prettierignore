@@ -17,3 +17,6 @@ coverage/
 
 ### Build ###
 dist/
+
+### Etc ###
+*.log

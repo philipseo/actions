@@ -1,6 +1,6 @@
 import { create } from 'istanbul-reports';
 
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants/ignore-pattern';
+import { DEFAULT_IGNORE_PATTERNS, MOCK_ROOT_PATH } from '#/constants';
 import { COVERAGE_TXT_FILE_NAME } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
 import { combineCoverage } from '#/upsert-test-coverage-comment/utils';
 import * as utils from '#/utils';
@@ -29,7 +29,6 @@ jest.mock('node:fs/promises', () => {
     readFile: jest.fn().mockReturnValue(mockFile),
   };
 });
-
 jest.mock('istanbul-reports', () => {
   return {
     create: jest.fn(() => {
@@ -39,16 +38,20 @@ jest.mock('istanbul-reports', () => {
     }),
   };
 });
-
-describe('combineCoverage', () => {
-  test('✅ should combine coverage and generate report', async () => {
-    jest
-      .spyOn(utils, 'getAllFilePaths')
+jest.mock('#/utils', () => {
+  return {
+    getRootPath: jest.fn().mockResolvedValue(MOCK_ROOT_PATH),
+    getAllFilePaths: jest
+      .fn()
       .mockResolvedValueOnce([
         '/coverage1/coverage-final.json',
         '/coverage2/coverage-final.json',
-      ]);
+      ]),
+  };
+});
 
+describe('combineCoverage', () => {
+  test('✅ should combine coverage and generate report', async () => {
     await combineCoverage();
 
     expect(utils.getAllFilePaths).toHaveBeenCalledWith({

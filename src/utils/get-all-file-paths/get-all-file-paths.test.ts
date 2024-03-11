@@ -1,8 +1,7 @@
-import { getRootGitIgnorePatterns } from '@philipseo/scripts';
-
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants/ignore-pattern';
+import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import * as utils from '#/utils';
 import { FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE } from '#/utils/get-all-file-paths/get-all-file-paths.constants';
+import { getRootGitIgnorePatterns } from '#/utils/get-all-file-paths/utils';
 
 describe('getAllFilePaths', () => {
   test('✅ Get all package.json paths', async () => {

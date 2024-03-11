@@ -1,0 +1,11 @@
+name: 'Upsert New Version Comment'
+description: 'Upsert a comment on a pull request with the new version of the package'
+
+inputs:
+  github-token:
+    description: 'The GitHub token'
+    required: true
+
+runs:
+  using: 'node20'
+  main: '../../dist/upsert-new-version-comment/index.js'
