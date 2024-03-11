@@ -25,10 +25,10 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Install Node.js
-        uses: ./actions/install-node@main
+        uses: ./actions/install-node
 
       - name: Install PNPM Dependencies
-        uses: ./actions/install-pnpm@main
+        uses: ./actions/install-pnpm
 
       - name: Run Build
         shell: bash
