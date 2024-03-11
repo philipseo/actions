@@ -33,7 +33,9 @@ jobs:
       - name: Update Version And Upsert CHANGELOG.md
         id: update-version-and-upsert-changelog
         uses: ./actions/update-version-and-changelog
-      #        uses: philipseo/actions/actions/update-version-and-changelog@main
+        #        uses: philipseo/actions/actions/update-version-and-changelog@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
 
       - name: Run prettier:fix
         shell: bash
