@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf dist && pnpm build:create-github-release-and-tag && pnpm build:slack-notify && pnpm build:update-version-and-changelog && pnpm build:upsert-new-version-comment && pnpm build:upsert-test-coverage-comment",
+    "build": "pnpm build:create-github-release-and-tag && pnpm build:slack-notify && pnpm build:update-version-and-changelog && pnpm build:upsert-new-version-comment && pnpm build:upsert-test-coverage-comment",
     "build:create-github-release-and-tag": "ncc build src/create-github-release-and-tag/index.ts -m -o dist/create-github-release-and-tag/",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -m -o dist/slack-notify/",
     "build:update-version-and-changelog": "ncc build src/update-version-and-changelog/index.ts -m -o dist/update-version-and-changelog/",
