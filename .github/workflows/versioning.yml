@@ -15,7 +15,7 @@ env:
   USERNAME: ${{ github.actor }}
 
 jobs:
-  update-version-and-upsert-changelog:
+  update-version-and-changelog:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,7 @@ jobs:
         run: pnpm build
 
       - name: Update Version And Upsert CHANGELOG.md
-        id: update-version-and-upsert-changelog
+        id: update-version-and-changelog
         uses: ./actions/update-version-and-changelog
         with:
           github-token: ${{ secrets.GH_TOKEN }}
@@ -49,11 +49,11 @@ jobs:
           git config user.name "${{ env.USERNAME }}"
           git config user.email "${{ env.USERNAME }}@users.noreply.github.com"
           git add .
-          git commit -m 'Release ${{ steps.update-version-and-upsert-changelog.outputs.new-version }}'
+          git commit -m 'Release ${{ steps.update-version-and-changelog.outputs.new-version }}'
           git push origin main --force
 
   create-github-release-and-tag:
-    needs: [update-version-and-upsert-changelog]
+    needs: [update-version-and-changelog]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -69,7 +69,7 @@ jobs:
   success-slack-notify:
     if: ${{ success() }}
     runs-on: ubuntu-latest
-    needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
+    needs: [update-version-and-changelog, create-github-release-and-tag]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
   failed-slack-notify:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    needs: [update-version-and-upsert-changelog, create-github-release-and-tag]
+    needs: [update-version-and-changelog, create-github-release-and-tag]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

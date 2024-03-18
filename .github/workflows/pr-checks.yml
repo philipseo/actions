@@ -51,6 +51,12 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
+      - name: Update Version And Upsert CHANGELOG.md
+        id: update-version-and-changelog
+        uses: ./actions/update-version-and-changelog
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+
   new-version-comment:
     if: ${{ github.base_ref == 'main' }}
     runs-on: ubuntu-latest

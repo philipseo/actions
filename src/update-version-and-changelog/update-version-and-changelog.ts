@@ -1,8 +1,8 @@
 import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
-import {
-  updateVersion,
-  upsertChangeLog,
-} from '#/update-version-and-changelog/utils';
+// import {
+//   updateVersion,
+//   upsertChangeLog,
+// } from '#/update-version-and-changelog/utils';
 import {
   ActionsToolkit,
   generateReleaseMessage,
@@ -32,12 +32,14 @@ async function updateVersionAndChangelog() {
         isBumpVersion: !isChangedPackage,
       });
 
-      await updateVersion({ path, newVersion });
-      await upsertChangeLog({
-        path: packagePath,
-        newVersion,
-        message: releaseMessage,
-      });
+      console.log('aaa', packagePath, isChangedPackage, releaseMessage);
+
+      // await updateVersion({ path, newVersion });
+      // await upsertChangeLog({
+      //   path: packagePath,
+      //   newVersion,
+      //   message: releaseMessage,
+      // });
     }
 
     toolkit.outputs['new-version'] = newVersion;
