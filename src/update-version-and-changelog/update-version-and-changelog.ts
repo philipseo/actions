@@ -32,7 +32,13 @@ async function updateVersionAndChangelog() {
         isBumpVersion: !isChangedPackage,
       });
 
-      console.log('aaa', packagePath, isChangedPackage, releaseMessage);
+      console.log(
+        'aaa',
+        packagePath,
+        changedPackagePaths,
+        isChangedPackage,
+        releaseMessage,
+      );
 
       // await updateVersion({ path, newVersion });
       // await upsertChangeLog({
