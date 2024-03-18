@@ -22,7 +22,7 @@ async function upsertChangeLog({
 
   if (isExistChangelog) {
     const originalContent = await readFile(`${path}/CHANGELOG.md`, 'utf-8');
-    content = `${originalContent}\n\n---\n\n${content}`;
+    content = `${content}\n\n---\n\n${originalContent}`;
   }
 
   await writeFile(`${path}/CHANGELOG.md`, content);
