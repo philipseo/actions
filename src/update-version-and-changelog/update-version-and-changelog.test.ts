@@ -5,7 +5,6 @@ import {
   MOCK_TOOLKIT_SUCCESS,
   MOCK_VERSION,
 } from '#/__mocks__';
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import updateVersionAndChangelog from '#/update-version-and-changelog/update-version-and-changelog';
 import * as updateVersionAndChangelogUtils from '#/update-version-and-changelog/utils';
 import * as utils from '#/utils';
@@ -33,11 +32,12 @@ describe('updateVersionAndChangelog', () => {
     jest
       .spyOn(utils, 'getAllFilePaths')
       .mockResolvedValueOnce([MOCK_PACKAGE_JSON_PATH]);
-    jest
-      .spyOn(utils, 'getChangedPackagePaths')
-      .mockResolvedValueOnce([
-        MOCK_PACKAGE_JSON_PATH.replace('/package.json', ''),
-      ]);
+    jest.spyOn(utils, 'getChangedPackagePaths').mockResolvedValueOnce([
+      {
+        path: 'mock',
+        isChangedPackage: true,
+      },
+    ]);
     jest
       .spyOn(utils, 'generateReleaseMessage')
       .mockReturnValueOnce(releaseMessage);
@@ -52,10 +52,6 @@ describe('updateVersionAndChangelog', () => {
 
     expect(utils.getNewVersion).toHaveBeenCalledWith({
       prTitle: MOCK_TOOLKIT_CONTEXT.pullRequest.title,
-    });
-    expect(utils.getAllFilePaths).toHaveBeenCalledWith({
-      filename: 'package.json',
-      ignorePatterns: DEFAULT_IGNORE_PATTERNS,
     });
     expect(utils.getChangedPackagePaths).toHaveBeenCalledTimes(1);
     expect(utils.generateReleaseMessage).toHaveBeenCalledTimes(1);

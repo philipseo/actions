@@ -5,7 +5,6 @@ import {
   MOCK_TOOLKIT_FAILURE,
   MOCK_TOOLKIT_SUCCESS,
 } from '#/__mocks__';
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import createGithubReleaseAndTag from '#/create-github-release-and-tag/create-github-release-and-tag';
 import * as utils from '#/utils';
 
@@ -33,11 +32,12 @@ describe('createGithubReleaseAndTag', () => {
     jest
       .spyOn(utils, 'getAllFilePaths')
       .mockResolvedValueOnce([MOCK_PACKAGE_JSON_PATH]);
-    jest
-      .spyOn(utils, 'getChangedPackagePaths')
-      .mockResolvedValueOnce([
-        MOCK_PACKAGE_JSON_PATH.replace('/package.json', ''),
-      ]);
+    jest.spyOn(utils, 'getChangedPackagePaths').mockResolvedValueOnce([
+      {
+        path: 'mock',
+        isChangedPackage: true,
+      },
+    ]);
     jest
       .spyOn(utils, 'getPackageJson')
       .mockResolvedValueOnce(MOCK_PACKAGE_JSON);
@@ -47,10 +47,6 @@ describe('createGithubReleaseAndTag', () => {
 
     await createGithubReleaseAndTag();
 
-    expect(utils.getAllFilePaths).toHaveBeenCalledWith({
-      filename: 'CHANGELOG.md',
-      ignorePatterns: DEFAULT_IGNORE_PATTERNS,
-    });
     expect(utils.getChangedPackagePaths).toHaveBeenCalledTimes(1);
     expect(utils.generateReleaseMessage).toHaveBeenCalledTimes(1);
     expect(utils.getPackageJson).toHaveBeenCalledTimes(1);
