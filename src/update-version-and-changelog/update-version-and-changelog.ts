@@ -1,4 +1,3 @@
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
 import {
   updateVersion,
   upsertChangeLog,
@@ -6,7 +5,6 @@ import {
 import {
   ActionsToolkit,
   generateReleaseMessage,
-  getAllFilePaths,
   getChangedPackagePaths,
   getNewVersion,
 } from '#/utils';
@@ -18,15 +16,9 @@ async function updateVersionAndChangelog() {
     const newVersion = await getNewVersion({
       prTitle: toolkit.context.pullRequest.title,
     });
-    const packageJsonPaths = await getAllFilePaths({
-      filename: 'package.json',
-      ignorePatterns: DEFAULT_IGNORE_PATTERNS,
-    });
     const changedPackagePaths = await getChangedPackagePaths({ toolkit });
 
-    for await (const path of packageJsonPaths) {
-      const packagePath = path.replace('/package.json', '');
-      const isChangedPackage = changedPackagePaths.includes(packagePath);
+    for await (const { path, isChangedPackage } of changedPackagePaths) {
       const releaseMessage = generateReleaseMessage({
         context: toolkit.context,
         isBumpVersion: !isChangedPackage,
@@ -34,7 +26,7 @@ async function updateVersionAndChangelog() {
 
       await updateVersion({ path, newVersion });
       await upsertChangeLog({
-        path: packagePath,
+        path: path,
         newVersion,
         message: releaseMessage,
       });

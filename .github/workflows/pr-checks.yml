@@ -26,6 +26,12 @@ jobs:
         shell: bash
         run: pnpm lint
 
+      - name: Update Version And Upsert CHANGELOG.md
+        id: update-version-and-changelog
+        uses: ./actions/update-version-and-changelog
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+
   test:
     runs-on: ubuntu-latest
     needs: [lint]
