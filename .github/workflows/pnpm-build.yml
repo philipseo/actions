@@ -4,18 +4,23 @@ on:
   workflow_call:
     inputs:
       pnpm-version:
+        type: string
         description: 'The version of pnpm to use'
         required: false
       node-version:
+        type: string
         description: 'The version of Node.js to use'
         required: false
       include-cache:
+        type: string
         description: 'Include the cache in the workflow.'
         required: false
       pnpm-install-args:
+        type: string
         description: 'The arguments to pass to the pnpm install command.'
         required: false
       build-command:
+        type: string
         description: 'The command to build the project'
         required: false
         default: 'pnpm build'
