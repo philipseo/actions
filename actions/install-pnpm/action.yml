@@ -1,35 +1,53 @@
-name: 'Install PNPM'
-description: 'Install PNPM'
+name: 'Install pnpm'
+description: 'Install pnpm'
 
 inputs:
   pnpm-version:
-    description: 'The version of PNPM to use'
+    description: 'The version of pnpm to use'
     required: false
-    default: '8'
+    default: '8.15.9'
+  node-version:
+    description: 'The version of Node.js to use'
+    required: false
+    default: '20'
+  include-cache:
+    description: 'Include the cache in the workflow.'
+    required: false
+    default: 'true'
+  pnpm-install-args:
+    description: 'The arguments to pass to the pnpm install command.'
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
   steps:
     - name: Install pnpm
-      uses: pnpm/action-setup@v3
+      uses: pnpm/action-setup@v4
       with:
         version: ${{ inputs.pnpm-version }}
-        run_install: false
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
 
     - name: Get pnpm store directory
-      id: pnpm-store-path
+      id: pnpm-cache
       shell: bash
       run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-    - name: Setup pnpm cache
-      uses: actions/cache@v4
+    - if: ${{ inputs.include-cache == 'true' }}
+      uses: actions/cache@v3
+      name: Setup pnpm cache
       with:
-        path: ${{ env.STORE_PATH }}
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
       shell: bash
-      run: pnpm install
+      run: pnpm install ${{ inputs.pnpm-install-args }}
