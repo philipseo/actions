@@ -19,6 +19,10 @@ on:
         description: 'The arguments to pass to the pnpm install command.'
         required: false
         default: ''
+      build-command:
+        description: 'The command to build the project'
+        required: false
+        default: 'pnpm build'
 
 jobs:
   runs-on: ubuntu-latest
@@ -33,3 +37,7 @@ jobs:
         node-version: ${{ inputs.node-version }}
         include-cache: ${{ inputs.include-cache }}
         pnpm-install-args: ${{ inputs.pnpm-install-args }}
+
+    - name: Build
+      shell: bash
+      run: ${{ inputs.build-command }}
