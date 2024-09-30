@@ -1,0 +1,35 @@
+name: pnpm build
+
+on:
+  workflow_call:
+    inputs:
+      pnpm-version:
+        description: 'The version of pnpm to use'
+        required: false
+        default: '8.15.9'
+      node-version:
+        description: 'The version of Node.js to use'
+        required: false
+        default: '20'
+      include-cache:
+        description: 'Include the cache in the workflow.'
+        required: false
+        default: 'true'
+      pnpm-install-args:
+        description: 'The arguments to pass to the pnpm install command.'
+        required: false
+        default: ''
+
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install node, pnpm and dependencies
+      uses: ./actions/install-pnpm
+      with:
+        pnpm-version: ${{ inputs.pnpm-version }}
+        node-version: ${{ inputs.node-version }}
+        include-cache: ${{ inputs.include-cache }}
+        pnpm-install-args: ${{ inputs.pnpm-install-args }}
