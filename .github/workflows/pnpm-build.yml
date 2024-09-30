@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install node, pnpm and dependencies
-        uses: ./actions/install-pnpm
+        uses: philipseo/actions/actions/install-pnpm@main
         with:
           pnpm-version: ${{ inputs.pnpm-version }}
           node-version: ${{ inputs.node-version }}
