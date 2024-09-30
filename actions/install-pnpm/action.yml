@@ -18,6 +18,9 @@ inputs:
     description: 'The arguments to pass to the pnpm install command.'
     required: false
     default: ''
+  npm-token:
+    description: 'The npm token to use'
+    required: false
 
 runs:
   using: 'composite'
@@ -32,6 +35,15 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
+
+    - name: Setup .npmrc
+      shell: bash
+      run: |
+        if [[ -z "${{ inputs.npm-token }}" ]]; then
+          cp .npmrc.example .npmrc
+        else
+          sed "s/INSERT_YOUR_GITHUB_TOKEN_HERE/${{ inputs.npm-token }}/g" .npmrc.example > .npmrc
+        fi
 
     - name: Get pnpm store directory
       id: pnpm-cache
