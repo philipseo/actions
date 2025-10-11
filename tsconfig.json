@@ -1,5 +1,4 @@
 {
-  "extends": "@philipseo/configs/tsconfig/node",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

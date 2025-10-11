@@ -1,0 +1,20 @@
+name: 'Setup pnpm'
+description: 'Setup pnpm'
+
+inputs:
+  pnpm-version:
+    description: 'The version of pnpm to install'
+    required: false
+    default: '10'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+
+    - name: Install Dependencies
+      run: pnpm install --frozen-lockfile
+      shell: bash

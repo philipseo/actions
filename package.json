@@ -2,10 +2,9 @@
   "name": "@philipseo/actions",
   "version": "0.0.0",
   "engines": {
-    "node": "20.x",
-    "pnpm": "9.x"
+    "node": "24.x",
+    "pnpm": "10.x"
   },
-  "packageManager": "pnpm@9.11.0",
   "license": "MIT",
   "author": "Philip Seo <hbnb7894@gmail.com>",
   "homepage": "https://github.com/philipseo/actions",
@@ -31,24 +30,24 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@actions/core": "1.10.1",
-    "@actions/github": "6.0.0",
-    "@octokit/rest": "20.0.2",
-    "@slack/web-api": "7.0.2",
+    "@actions/core": "1.11.1",
+    "@actions/github": "6.0.1",
+    "@octokit/rest": "22.0.0",
+    "@slack/web-api": "7.11.0",
     "istanbul-lib-coverage": "3.2.2",
     "istanbul-lib-report": "3.0.1",
-    "istanbul-reports": "3.1.7"
+    "istanbul-reports": "3.2.0"
   },
   "devDependencies": {
-    "@philipseo/configs": "0.0.13",
+    "@philipseo/configs": "0.0.28",
     "@types/istanbul-lib-coverage": "2.0.6",
     "@types/istanbul-lib-report": "3.0.3",
     "@types/istanbul-reports": "3.0.4",
-    "@types/jest": "29.5.12",
-    "@types/node": "20.11.24",
-    "@vercel/ncc": "0.38.1",
-    "jest": "29.7.0",
-    "ts-jest": "29.1.2",
+    "@types/jest": "30.0.0",
+    "@types/node": "24.7.1",
+    "@vercel/ncc": "0.38.4",
+    "jest": "30.2.0",
+    "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0"
   }

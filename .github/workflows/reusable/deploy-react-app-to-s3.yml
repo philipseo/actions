@@ -1,0 +1,73 @@
+name: Deploy React App To S3
+on:
+  workflow_call:
+    inputs:
+      bucket-name:
+        description: The name of the S3 bucket to sync to
+        required: true
+        type: string
+      cloudfront-distribution-id:
+        description: The ID of the CloudFront distribution to invalidate
+        required: true
+        type: string
+      role-to-assume:
+        description: The ARN of the IAM role to assume
+        required: true
+        type: string
+      node-version:
+        description: The version of Node.js to use
+        required: false
+        type: string
+        default: '22'
+      pnpm-version:
+        description: The version of pnpm to use
+        required: false
+        type: string
+        default: '10'
+      build-command:
+        description: The build command to use
+        required: false
+        type: string
+        default: 'pnpm build'
+      build-output-path:
+        description: The path to the build output
+        required: false
+        type: string
+        default: 'dist'
+      aws-region:
+        description: The AWS region to use
+        required: false
+        type: string
+        default: 'ap-northeast-2'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Setup pnpm
+        uses: ./.github/actions/setup-pnpm
+        with:
+          pnpm-version: ${{ inputs.pnpm-version }}
+
+      - name: Build
+        run: ${{ inputs.build-command }}
+
+      - name: Deploy to S3
+        uses: ./.github/actions/s3-deploy
+        with:
+          aws-region: ${{ inputs.aws-region }}
+          role-to-assume: ${{ inputs.role-to-assume }}
+          bucket-name: ${{ inputs.bucket-name }}
+          build-output-path: ${{ inputs.build-output-path }}
+          cloudfront-distribution-id: ${{ inputs.cloudfront-distribution-id }}
