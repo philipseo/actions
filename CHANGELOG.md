@@ -1,5 +1,11 @@
 # @philipseo/actions
 
+## 0.2.1
+
+### Patch Changes
+
+- c2a3cac: setup-pnpm: default to the packageManager version instead of pnpm 10
+
 ## 0.2.0
 
 ### Minor Changes
