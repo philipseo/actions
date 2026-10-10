@@ -3,9 +3,9 @@ description: 'Setup pnpm'
 
 inputs:
   pnpm-version:
-    description: 'The version of pnpm to install'
+    description: 'The version of pnpm to install (defaults to packageManager in package.json)'
     required: false
-    default: '10'
+    default: ''
 
 runs:
   using: 'composite'
