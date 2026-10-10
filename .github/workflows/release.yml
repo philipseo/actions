@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+    steps:
+      # GH_TOKEN (admin) pushes the release commit past main protection
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Require pending changeset
+        shell: bash
+        run: |
+          shopt -s nullglob
+          pending=()
+          for file in .changeset/*.md; do
+            [[ "$(basename "$file")" == "README.md" ]] && continue
+            pending+=("$file")
+          done
+          if [ ${#pending[@]} -eq 0 ]; then
+            echo "No pending changesets. Add one with: pnpm changeset"
+            exit 1
+          fi
+
+      - name: Version
+        id: version
+        shell: bash
+        run: |
+          pnpm run version
+          echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      # actions run from the committed dist/
+      - name: Build
+        shell: bash
+        run: pnpm build
+
+      - name: Format
+        shell: bash
+        run: pnpm prettier:fix
+
+      - name: Commit, tag and push
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: release v${{ steps.version.outputs.version }}"
+          pnpm changeset tag
+          git push --follow-tags origin HEAD:main
+
+      - name: Create GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          awk -v v="## ${VERSION}" '$0==v{f=1;next} /^## /{f=0} f' CHANGELOG.md > release-notes.md
+          gh release create "v${VERSION}" --title "v${VERSION}" --notes-file release-notes.md
+
+  failed-slack-notify:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    needs: [release]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Slack notify
+        uses: ./actions/slack-notify
+        with:
+          title: '❗Failed philipseo/actions Release'
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
