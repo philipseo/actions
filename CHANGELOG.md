@@ -1,5 +1,15 @@
 # @philipseo/actions
 
+## 0.2.0
+
+### Minor Changes
+
+- 1621fea: Remove the custom versioning actions (update-version-and-changelog, create-github-release-and-tag, upsert-new-version-comment) and the reusable versioning workflow; releases use changesets. Update the shared lint config to @philipseo/configs 0.1.2 (eslint 10, TypeScript 6, prettier 3.9.10)
+
+### Patch Changes
+
+- 1621fea: slack-notify: work on events without a pull request (push, workflow_dispatch); branch falls back to GITHUB_REF_NAME
+
 ## 0.1.0
 
 ### Minor Changes
