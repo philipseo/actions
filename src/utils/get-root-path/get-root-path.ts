@@ -17,7 +17,7 @@ async function getRootPath() {
       await access(currentTargetPath, constants.R_OK);
 
       return dirname(currentTargetPath);
-    } catch (error) {
+    } catch {
       lastCwd = dirname(lastCwd);
     }
   }

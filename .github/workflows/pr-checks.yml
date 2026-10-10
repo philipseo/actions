@@ -16,11 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: ./actions/install-node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
-      - name: Install PNPM Dependencies
-        uses: ./actions/install-pnpm
+      - name: Setup pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Run lint
         shell: bash
@@ -42,11 +44,13 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Install Node.js
-        uses: ./actions/install-node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
-      - name: Install PNPM Dependencies
-        uses: ./actions/install-pnpm
+      - name: Setup pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Run Test Coverage
         shell: bash
