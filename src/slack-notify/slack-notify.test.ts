@@ -52,6 +52,28 @@ describe('slackNotify', () => {
     expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
   });
 
+  test('✅ Send slack notification without a pull request (workflow_dispatch)', async () => {
+    const context = {
+      payload: MOCK_TOOLKIT_CONTEXT.payload,
+      get pullRequest(): never {
+        throw new Error('no pull_request object');
+      },
+    };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    jest.spyOn(utils, 'ActionsToolkit').mockImplementationOnce(() => {
+      return {
+        ...MOCK_TOOLKIT,
+        context,
+        inputs: mockInputs,
+      };
+    });
+
+    await slackNotify();
+
+    expect(MOCK_TOOLKIT_SUCCESS).toHaveBeenCalled();
+  });
+
   test('✅ Send slack notification with extendsSectionFields', async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

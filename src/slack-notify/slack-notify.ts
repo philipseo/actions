@@ -15,11 +15,11 @@ async function slackNotify() {
       ? JSON.parse(toolkit.inputs[GET_INPUT_KEY.EXTENDS_SECTION_FIELDS])
       : [];
 
+    // pull_request is absent on push and workflow_dispatch
     const {
-      payload: { repository },
-      pullRequest,
+      payload: { repository, pull_request: pullRequest },
     } = toolkit.context;
-    const branchName = pullRequest?.head?.ref;
+    const branchName = pullRequest?.head?.ref ?? process.env.GITHUB_REF_NAME;
     const owner = repository?.owner;
     const repositoryUrl = repository?.html_url;
 
