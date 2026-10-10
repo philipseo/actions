@@ -25,7 +25,6 @@ async function getAllFilePaths({
   if (!filename || ignorePatterns.length <= 0) {
     throw new Error(FILENAME_OR_IGNORE_PATTERNS_ERROR_MESSAGE);
   } else {
-    // eslint-disable-next-line no-inner-declarations
     const recursiveGetFilePaths = async (currentDirectoryPath: string) => {
       const currentDirectoryFilePath = path.join(
         currentDirectoryPath,

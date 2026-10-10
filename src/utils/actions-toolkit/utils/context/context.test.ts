@@ -14,6 +14,7 @@ const mockPayload = {
 
 jest.mock('node:fs', () => {
   return {
+    ...jest.requireActual('node:fs'),
     readFileSync: jest.fn().mockImplementation(() => {
       return JSON.stringify(mockPayload);
     }),

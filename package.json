@@ -13,7 +13,7 @@
     "url": "https://github.com/philipseo/actions"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "build": "pnpm build:create-github-release-and-tag && pnpm build:slack-notify && pnpm build:update-version-and-changelog && pnpm build:upsert-new-version-comment && pnpm build:upsert-test-coverage-comment",
     "build:create-github-release-and-tag": "ncc build src/create-github-release-and-tag/index.ts -m -o dist/create-github-release-and-tag/",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -m -o dist/slack-notify/",
@@ -39,6 +39,7 @@
     "istanbul-reports": "3.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "9.39.5",
     "@philipseo/configs": "0.0.28",
     "@types/istanbul-lib-coverage": "2.0.6",
     "@types/istanbul-lib-report": "3.0.3",
@@ -46,9 +47,16 @@
     "@types/jest": "30.0.0",
     "@types/node": "24.7.1",
     "@vercel/ncc": "0.38.4",
+    "eslint": "9.39.5",
+    "eslint-config-prettier": "10.1.8",
+    "husky": "9.1.7",
     "jest": "30.2.0",
+    "lint-staged": "17.6.0",
+    "prettier": "3.6.2",
     "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
-    "tsconfig-paths": "4.2.0"
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.0"
   }
 }

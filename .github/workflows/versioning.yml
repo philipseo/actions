@@ -24,11 +24,13 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Install Node.js
-        uses: ./actions/install-node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
-      - name: Install PNPM Dependencies
-        uses: ./actions/install-pnpm
+      - name: Setup pnpm and install dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Run Build
         shell: bash
