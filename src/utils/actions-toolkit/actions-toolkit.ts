@@ -1,15 +1,14 @@
-import { setFailed } from '@actions/core';
-import { Octokit } from '@octokit/rest';
-
 import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
 import {
   Context,
+  NodeExit,
   createInputProxy,
   createOutputProxy,
-  NodeExit,
 } from '#/utils/actions-toolkit/utils';
 import { CreateInputProxyProps } from '#/utils/actions-toolkit/utils/create-input-proxy/create-input-proxy.types';
 import getErrorMessage from '#/utils/get-error-message/get-error-message';
+import { setFailed } from '@actions/core';
+import { Octokit } from '@octokit/rest';
 
 class ActionsToolkit {
   public inputs: CreateInputProxyProps;

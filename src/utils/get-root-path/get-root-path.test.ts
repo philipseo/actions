@@ -1,12 +1,11 @@
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-
 import { MOCK_ROOT_PATH } from '#/__mocks__';
 import { getRootPath } from '#/utils';
 import {
   NOT_FOUND_ROOT_PATH,
   PNPM_LOCK_YAML,
 } from '#/utils/get-root-path/get-root-path.constants';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 
 describe('getRootPath', () => {
   test('✅ should return root path when PNPM_LOCK_YAML exists in current directory or its parent directories', async () => {

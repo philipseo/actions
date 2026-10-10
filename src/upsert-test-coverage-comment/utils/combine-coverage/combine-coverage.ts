@@ -1,15 +1,13 @@
-import { readFile } from 'node:fs/promises';
-
+import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
+import { COVERAGE_TXT_FILE_NAME } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
+import { getAllFilePaths, getRootPath } from '#/utils';
 import {
   createCoverageMap,
   createCoverageSummary,
 } from 'istanbul-lib-coverage';
 import { createContext } from 'istanbul-lib-report';
 import { create } from 'istanbul-reports';
-
-import { DEFAULT_IGNORE_PATTERNS } from '#/constants';
-import { COVERAGE_TXT_FILE_NAME } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
-import { getAllFilePaths, getRootPath } from '#/utils';
+import { readFile } from 'node:fs/promises';
 
 async function combineCoverage() {
   const coveragePaths = await getAllFilePaths({

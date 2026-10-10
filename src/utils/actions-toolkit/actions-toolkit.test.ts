@@ -1,11 +1,10 @@
-import { setFailed } from '@actions/core';
-
 import {
   MOCK_ERROR_MESSAGE,
   MOCK_GITHUB_TOKEN,
   MOCK_TOOLKIT_CONTEXT,
 } from '#/__mocks__';
 import { ActionsToolkit } from '#/utils';
+import { setFailed } from '@actions/core';
 
 jest.mock('@actions/core');
 jest.mock('#/utils/actions-toolkit/utils', () => {

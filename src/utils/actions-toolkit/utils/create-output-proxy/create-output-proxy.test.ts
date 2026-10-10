@@ -1,6 +1,5 @@
-import * as core from '@actions/core';
-
 import { createOutputProxy } from '#/utils/actions-toolkit/utils';
+import * as core from '@actions/core';
 
 jest.mock('@actions/core');
 

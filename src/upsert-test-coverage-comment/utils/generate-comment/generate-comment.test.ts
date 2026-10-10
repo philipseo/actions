@@ -1,5 +1,3 @@
-import { readFile } from 'node:fs/promises';
-
 import { MOCK_ROOT_PATH } from '#/__mocks__';
 import {
   COVERAGE_TXT_FILE_NAME,
@@ -7,6 +5,7 @@ import {
 } from '#/upsert-test-coverage-comment/upsert-test-coverage-comment.constants';
 import { generateComment } from '#/upsert-test-coverage-comment/utils';
 import { getRootPath } from '#/utils';
+import { readFile } from 'node:fs/promises';
 
 jest.mock('node:fs/promises', () => {
   return {

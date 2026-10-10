@@ -1,7 +1,6 @@
-import { WebClient } from '@slack/web-api';
-
 import { GET_INPUT_KEY } from '#/slack-notify/slack-notify.constants';
 import { ActionsToolkit } from '#/utils';
+import { WebClient } from '@slack/web-api';
 
 async function slackNotify() {
   const toolkit = new ActionsToolkit();

@@ -1,6 +1,5 @@
-import { setOutput } from '@actions/core';
-
 import { ObjectType } from '#/utils/actions-toolkit/actions-toolkit.types';
+import { setOutput } from '@actions/core';
 
 function createOutputProxy() {
   return new Proxy<ObjectType>({} as ObjectType, {

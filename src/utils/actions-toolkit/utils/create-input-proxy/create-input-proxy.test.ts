@@ -1,6 +1,5 @@
-import { getInput } from '@actions/core';
-
 import { createInputProxy } from '#/utils/actions-toolkit/utils';
+import { getInput } from '@actions/core';
 
 type MockedInputValues = {
   [key: string]: string;

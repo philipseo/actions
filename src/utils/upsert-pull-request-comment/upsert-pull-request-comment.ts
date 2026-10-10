@@ -1,14 +1,13 @@
 import {
-  getExistingPullRequestComment,
   GetExistingPullRequestCommentProps,
+  getExistingPullRequestComment,
 } from '#/utils/upsert-pull-request-comment/utils';
 
 /**
  * @property {GetExistingPullRequestCommentProps} props - props
  * @property {string} comment - comment
  */
-interface UpsertPullRequestCommentProps
-  extends GetExistingPullRequestCommentProps {
+interface UpsertPullRequestCommentProps extends GetExistingPullRequestCommentProps {
   comment: string;
 }
 

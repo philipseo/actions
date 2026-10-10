@@ -1,13 +1,11 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'path';
-
-import type { context } from '@actions/github';
-
 import {
   GITHUB_EVENT_PATH_NOT_FOUND_MESSAGE,
   PULL_REQUEST_NOT_FOUND_MESSAGE,
   REPOSITORY_NOT_FOUND_MESSAGE,
 } from '#/utils/actions-toolkit/utils/context/context.constants';
+import type { context } from '@actions/github';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'path';
 
 type WebhookPayload = typeof context.payload;
 

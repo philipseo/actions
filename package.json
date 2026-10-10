@@ -15,11 +15,8 @@
   },
   "scripts": {
     "prepare": "husky",
-    "build": "pnpm build:create-github-release-and-tag && pnpm build:slack-notify && pnpm build:update-version-and-changelog && pnpm build:upsert-new-version-comment && pnpm build:upsert-test-coverage-comment",
-    "build:create-github-release-and-tag": "ncc build src/create-github-release-and-tag/index.ts -m -o dist/create-github-release-and-tag/",
+    "build": "pnpm build:slack-notify && pnpm build:upsert-test-coverage-comment",
     "build:slack-notify": "ncc build src/slack-notify/index.ts -m -o dist/slack-notify/",
-    "build:update-version-and-changelog": "ncc build src/update-version-and-changelog/index.ts -m -o dist/update-version-and-changelog/",
-    "build:upsert-new-version-comment": "ncc build src/upsert-new-version-comment/index.ts -m -o dist/upsert-new-version-comment/",
     "build:upsert-test-coverage-comment": "ncc build src/upsert-test-coverage-comment/index.ts -m -o dist/upsert-test-coverage-comment/",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix",
@@ -44,24 +41,21 @@
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",
-    "@eslint/js": "9.39.5",
-    "@philipseo/configs": "0.0.28",
+    "@philipseo/configs": "0.1.2",
     "@types/istanbul-lib-coverage": "2.0.6",
     "@types/istanbul-lib-report": "3.0.3",
     "@types/istanbul-reports": "3.0.4",
     "@types/jest": "30.0.0",
     "@types/node": "24.19.2",
     "@vercel/ncc": "0.45.0",
-    "eslint": "9.39.5",
-    "eslint-config-prettier": "10.1.8",
+    "eslint": "10.12.0",
     "husky": "9.1.7",
     "jest": "30.5.2",
     "lint-staged": "17.6.0",
-    "prettier": "3.6.2",
+    "prettier": "3.9.10",
     "ts-jest": "29.4.14",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.46.0"
+    "typescript": "6.0.3"
   }
 }

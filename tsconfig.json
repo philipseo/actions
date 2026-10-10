@@ -3,9 +3,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "baseUrl": ".",
     "paths": {
-      "#/*": ["src/*"]
+      "#/*": ["./src/*"]
     },
     "allowJs": true,
     "target": "es2022",
@@ -13,7 +12,8 @@
     "types": ["node", "jest"],
     "strict": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "rootDir": "."
   },
   "include": ["**/*.ts"],
   "ts-node": {

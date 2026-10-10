@@ -8,7 +8,8 @@ export default {
       {
         tsconfig: {
           module: 'commonjs',
-          moduleResolution: 'node10',
+          moduleResolution: 'bundler',
+          rootDir: '.',
           allowJs: true,
           isolatedModules: true,
         },

@@ -1,11 +1,10 @@
-import fs from 'node:fs';
-
 import { Context } from '#/utils/actions-toolkit/utils';
 import {
   GITHUB_EVENT_PATH_NOT_FOUND_MESSAGE,
   PULL_REQUEST_NOT_FOUND_MESSAGE,
   REPOSITORY_NOT_FOUND_MESSAGE,
 } from '#/utils/actions-toolkit/utils/context/context.constants';
+import fs from 'node:fs';
 
 const mockPayload = {
   repository: { owner: { login: 'owner' }, name: 'repo' },

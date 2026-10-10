@@ -1,6 +1,5 @@
-import { readFile } from 'node:fs/promises';
-
 import getRootPath from '#/utils/get-root-path/get-root-path';
+import { readFile } from 'node:fs/promises';
 
 async function getRootGitIgnorePatterns() {
   const rootPath = await getRootPath();

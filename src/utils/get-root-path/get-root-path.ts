@@ -1,10 +1,9 @@
-import { access, constants } from 'node:fs/promises';
-import { dirname, join, parse } from 'node:path';
-
 import {
   NOT_FOUND_ROOT_PATH,
   PNPM_LOCK_YAML,
 } from '#/utils/get-root-path/get-root-path.constants';
+import { access, constants } from 'node:fs/promises';
+import { dirname, join, parse } from 'node:path';
 
 async function getRootPath() {
   const currentCwd = process.cwd();
