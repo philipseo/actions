@@ -10,5 +10,5 @@ outputs:
     description: 'The new version'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: '../../dist/update-version-and-changelog/index.js'
