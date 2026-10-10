@@ -1,6 +1,7 @@
 {
   "name": "@philipseo/actions",
-  "version": "0.0.0",
+  "version": "0.0.2",
+  "private": true,
   "engines": {
     "node": "24.x",
     "pnpm": "10.x"
@@ -27,7 +28,9 @@
     "lint": "pnpm eslint && pnpm prettier",
     "lint:fix": "pnpm eslint:fix && pnpm prettier:fix",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "changeset": "changeset",
+    "version": "changeset version"
   },
   "dependencies": {
     "@actions/core": "1.11.1",
@@ -39,6 +42,7 @@
     "istanbul-reports": "3.2.0"
   },
   "devDependencies": {
+    "@changesets/cli": "3.0.3",
     "@eslint/js": "9.39.5",
     "@philipseo/configs": "0.0.28",
     "@types/istanbul-lib-coverage": "2.0.6",

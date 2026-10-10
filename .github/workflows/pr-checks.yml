@@ -28,12 +28,6 @@ jobs:
         shell: bash
         run: pnpm lint
 
-      - name: Update Version And Upsert CHANGELOG.md
-        id: update-version-and-changelog
-        uses: ./actions/update-version-and-changelog
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-
   test:
     runs-on: ubuntu-latest
     needs: [lint]
@@ -61,23 +55,10 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
 
-  new-version-comment:
-    if: ${{ github.base_ref == 'main' }}
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Upsert Test Coverage Comment
-        uses: ./actions/upsert-new-version-comment
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-
   failed-slack-notify:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    needs: [lint, test, new-version-comment]
+    needs: [lint, test]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
