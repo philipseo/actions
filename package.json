@@ -25,16 +25,17 @@
     "eslint:fix": "eslint . --fix",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "lint": "pnpm eslint && pnpm prettier",
+    "lint": "pnpm eslint && pnpm prettier && pnpm typecheck",
     "lint:fix": "pnpm eslint:fix && pnpm prettier:fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "changeset": "changeset",
-    "version": "changeset version"
+    "version": "changeset version",
+    "typecheck": "tsc"
   },
   "dependencies": {
-    "@actions/core": "1.11.1",
-    "@actions/github": "6.0.1",
+    "@actions/core": "3.0.1",
+    "@actions/github": "9.1.1",
     "@octokit/rest": "22.0.1",
     "@slack/web-api": "7.19.0",
     "istanbul-lib-coverage": "3.2.2",

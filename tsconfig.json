@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node10",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "#/*": ["src/*"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "target": "es2022",
+    "lib": ["es2023"],
+    "types": ["node", "jest"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
   },
   "include": ["**/*.ts"],
   "ts-node": {
