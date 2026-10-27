@@ -1,5 +1,11 @@
 # @philipseo/actions
 
+## 0.2.2
+
+### Patch Changes
+
+- e84e70c: Update dependencies: @slack/web-api 8, pnpm 12.14, actions/setup-node v7, pnpm/action-setup v6
+
 ## 0.2.1
 
 ### Patch Changes
